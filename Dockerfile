@@ -1,18 +1,8 @@
-FROM golang:1.12-alpine AS build-env
+FROM amazon/aws-lambda-nodejs:12
+RUN mkdir -p /opt/app
+COPY . /opt/app
+WORKDIR /opt/app
 
-ENV GO111MODULE=on
-
-RUN apk add --no-cache git
-
-WORKDIR ${GOPATH}/src/github.com/container-examples/golang-webserver/
-COPY . .
-
-RUN go mod download
-RUN go build -ldflags="-w -s" -o ./build/webserver .
-
-FROM alpine:3.11
-
-WORKDIR /app
-COPY --from=build-env /go/src/github.com/container-examples/golang-webserver/build/webserver /app/webserver
-
-ENTRYPOINT [ "/app/webserver" ]
+COPY app.js package*.json ./
+RUN npm install
+CMD [ ".aws-sam/build/HelloEorldFunction/app.lambdaHandler" ]
