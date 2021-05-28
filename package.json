@@ -1,0 +1,44 @@
+{
+  "name": "hello_world",
+  "version": "1.0.0",
+  "description": "hello world sample for NodeJS",
+  "main": "app.js",
+  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "@mobiscroll/react-lite": "^4.10.2",
+    "aws-serverless-express": "^3.3.8",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "express": "^4.17.1",
+    "node-sass": "^4.13.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "style-loader": "^1.1.4"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "@types/aws-lambda": "^8.10.46",
+    "aws-sam-webpack-plugin": "^0.6.0",
+    "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "css-loader": "^3.5.2",
+    "isomorphic-style-loader": "^5.1.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "mocha": "^6.1.4",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
