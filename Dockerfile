@@ -4,5 +4,4 @@ COPY . /opt/app
 WORKDIR /opt/app
 COPY hello-world/app.js package*.json ./
 RUN npm install
-RUN npm run build
-CMD [ ".aws-sam/build/HelloWorldFunction/app.lambdaHandler" ]
+CMD [ "app.lambdaHandler" ]
