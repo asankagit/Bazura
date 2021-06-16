@@ -4,6 +4,8 @@ RUN rm -rf .aws-sam
 RUN npm rebuild node-sass --force
 RUN npm install
 RUN npm run build
+RUN pwd
+RUN ls -la 
 CMD [ ".aws-sam/build/HelloWorldFunction/app.lambdaHandler"]
 
 
