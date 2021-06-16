@@ -1,5 +1,5 @@
 FROM amazon/aws-lambda-nodejs:12
-COPY hello-word/app.js package*.json ./
+COPY hello-world/app.js package*.json ./
 RUN npm install
 RUN npm run build
 CMD [ ".aws-sam/build/HelloWorldFunction/app.lambdaHandler"]
