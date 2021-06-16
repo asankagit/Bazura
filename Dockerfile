@@ -1,4 +1,8 @@
 FROM amazon/aws-lambda-nodejs:12
-COPY app.js package*.json ./
+COPY hello-word/app.js package*.json ./
 RUN npm install
-CMD [ "app.lambdaHandler" ]
+RUN npm run build
+CMD [ ".aws-sam/build/HelloWorldFunction/app.lambdaHandler"]
+
+
+# https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/
