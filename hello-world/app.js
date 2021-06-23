@@ -63,6 +63,19 @@ const template = (content) => `<!DOCTYPE html>
 app.use('/', (req, res) => {
     res.send(template(renderToString(createElement(Hello))))
 })
+app.use('/static/styles.css', (req, response) => {
+  var filePath = path.join(__dirname, 'styles.css');
+  var stat = fs.statSync(filePath);
+
+  response.writeHead(200, {
+      'Content-Type': 'text/css',
+      'Content-Length': stat.size
+  });
+
+  var readStream = fs.createReadStream(filePath);
+  // We replaced all the event handlers with a simple call to readStream.pipe()
+  readStream.pipe(response);
+})
 
 exports.lambdaHandler = (event, context) => {
     awsServerlessExpress.proxy(server, event, context)
