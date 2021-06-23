@@ -77,6 +77,10 @@ app.use('/static/styles.css', (req, response) => {
   readStream.pipe(response);
 })
 
+app.use("/heart-beat", (req, res) => {
+  res.json({"status": "ok"});
+})
+
 exports.lambdaHandler = (event, context) => {
     awsServerlessExpress.proxy(server, event, context)
 }
