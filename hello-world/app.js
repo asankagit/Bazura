@@ -36,6 +36,7 @@ const template = (content) => `<!DOCTYPE html>
   <meta charset="utf-8">
   <title>Pixellio </title>
   <link href="./static/styles.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
   <script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
 </head>
@@ -60,8 +61,6 @@ const template = (content) => `<!DOCTYPE html>
 </html>`;
 
 app.use('/', (req, res) => {
-    console.log("rendertoString", renderToString(createElement(Hello)))
-    console.log("templte", template(renderToString(createElement(Hello))))
     res.send(template(renderToString(createElement(Hello))))
 })
 
