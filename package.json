@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "faker": "^5.5.3",
     "get-stream": "^6.0.1",
-    "node-sass": "^4.14.0",
+    "node-sass": "^7.0.0",
     "pdfkit": "^0.12.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
