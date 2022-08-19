@@ -25,6 +25,23 @@ module.exports = {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
       {
+        test: /\.svg$/,
+        oneOf: [
+            {
+                include: path.resolve(__dirname, '../node_modules/package-name/'),
+                use: 'svg-inline-loader'
+            },
+            {
+                exclude: path.resolve(__dirname, '../node_modules/package-name/'),
+                use: 'url-loader'
+            }
+        ]
+      },
+      {
+        test: /\.(woff|ttf|otf|eot|woff2)$/i,
+        loader: "file-loader"
+      },
+      {
         test: /\.[s]?css$/,
         include: [
           path.join(__dirname, "/hello-world/src"),
@@ -33,7 +50,7 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           { loader: "css-loader", options: { modules: true} },
-          { loader: "sass-loader" }
+          // { loader: "sass-loader" }
         ]
       }
     ]

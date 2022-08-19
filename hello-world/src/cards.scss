@@ -36,7 +36,7 @@ h1 {
 .date {
   font-family: 'Open sans';
   font-weight: 500;
-  margin: 0px 43%;
+  margin: 0px 40%;
   padding: 10px;
 
 }
@@ -59,10 +59,10 @@ body {
 a {font-family: 'Roboto',serif,cursive; text-decoration:  none;}
 
 .bottom {
-  bottom: 0;
-  right: 0;
-  background-color: white;
-  font-size: 1px;
+  top: 90%;
+  right: 60px;
+  position: absolute;
+  font-size: 1rem;
 }
 
 @media print {
@@ -81,4 +81,16 @@ a {font-family: 'Roboto',serif,cursive; text-decoration:  none;}
   -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
   color-adjust: exact !important;                 /* Firefox 48 – 96 */
   print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+}
+
+.locationsvgwrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: -40px;
+  margin-top: 10px;
+}
+
+.svg {
+  width: 20px;
+  filter: contrast(0.2);
 }
