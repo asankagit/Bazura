@@ -40,8 +40,13 @@ const template = (content) => `<!DOCTYPE html>
   <script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
 </head>
+<script>
+function printCard(){
+  print()
+}
+</script>
 <body>
-  <div class="content">
+  <div class="content" onClick="printCard()">
      <div id="app" class="wrap-inner">
         ${content}
      </div>
@@ -61,7 +66,8 @@ const template = (content) => `<!DOCTYPE html>
 </html>`;
 
 app.use('/', (req, res) => {
-    res.send(template(renderToString(createElement(Hello))))
+  if (req.query.isme !== "true") { return res.send("Landing page") }
+    res.send(template(renderToString(createElement(Hello, { to: req.query.to } ))))
 })
 app.use('/static/styles.css', (req, response) => {
   var filePath = path.join(__dirname, 'styles.css');
