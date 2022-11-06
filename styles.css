@@ -1,11 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Dancing+Script);
 @import url(https://fonts.googleapis.com/css?family=Roboto);
-
-.top {
+.ZXZqbvf1GLbUf2ynMDdZJ {
   opacity: 1;
 }
 
-.bg {
+._2jFW5Q9rQ7o4k0Hy5jL0oK {
   height: 100%;
   width: 100%;
   display:flex;
@@ -19,21 +18,21 @@ h1 {
   font-family: 'Dancing Script';
 }
 
-.couplename {
+._1oWkZGjBxJduvjuGQjm9Yd {
   font-size: 50px;
   font-family: Dancing Script;
   color: #a99113;
   margin: 15px;
 }
 
-.inviteto{
+._30U0B77_2Zw3S6u2H1I61Y{
   text-decoration: underline 1px;
   font-family: 'Dancing Script';
   margin: 0;
   font-size: 40px;
 }
 
-.date {
+._29UN_xV8OHdSQdRq2XTe0p {
   font-family: 'Open sans';
   font-weight: 500;
   margin: 0px 40%;
@@ -58,7 +57,7 @@ body {
 
 a {font-family: 'Roboto',serif,cursive; text-decoration:  none;}
 
-.bottom {
+._2P3NU2Vjzz_4d9x7Gtamf5 {
   top: 90%;
   right: 60px;
   position: absolute;
@@ -82,14 +81,14 @@ a {font-family: 'Roboto',serif,cursive; text-decoration:  none;}
   print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
 }
 
-.locationsvgwrapper {
+._18NxVT_Dm1vZQgeH_R2prE {
   display: flex;
   justify-content: center;
   margin-bottom: -40px;
   margin-top: 10px;
 }
 
-.svg {
+.pGQE8p8sSinvfvs6NKihU {
   width: 20px;
   filter: contrast(0.2);
 }

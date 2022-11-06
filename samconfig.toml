@@ -8,4 +8,5 @@ s3_prefix = "helloPixellio"
 region = "ap-south-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+image_repositories = []
 

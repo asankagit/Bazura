@@ -40,16 +40,14 @@ const template = (content) => `<!DOCTYPE html>
   <script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
 </head>
-<script>
-function printCard(){
-  print()
-}
-</script>
+
+<script scr="./bundle.js"></script>
 <body>
-  <div class="content" onClick="printCard()">
+  <div class="content">
      <div id="app" class="wrap-inner">
         ${content}
      </div>
+     <div id="react-root">${content}</div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- pixellio_adsense -->
@@ -65,6 +63,21 @@ function printCard(){
 </body
 </html>`;
 
+app.use('/bundle.js', () => {
+  var filePath = path.join(__dirname, 'bundle.js');
+  var stat = fs.statSync(filePath);
+
+  response.writeHead(200, {
+      'Content-Type': 'text/javascript',
+      'Content-Length': stat.size
+  });
+
+  var readStream = fs.createReadStream(filePath);
+  // We replaced all the event handlers with a simple call to readStream.pipe()
+  readStream.pipe(response);
+})
+
+// app.use(express.static())
 app.use('/', (req, res) => {
   if (req.query.isme !== "true") { return res.send("Landing page") }
     res.send(template(renderToString(createElement(Hello, { to: req.query.to } ))))
