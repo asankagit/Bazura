@@ -1,6 +1,7 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
+const path = require('path');
 
 /**
  *
@@ -14,7 +15,7 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import Hello from './src/Hello';
 import World from './src/World';
@@ -41,13 +42,12 @@ const template = (content) => `<!DOCTYPE html>
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
 </head>
 
-<script scr="./bundle.js"></script>
-<body>
+<body
   <div class="content">
      <div id="app" class="wrap-inner">
         ${content}
      </div>
-     <div id="react-root">${content}</div>
+     <div id="root">${content}</div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- pixellio_adsense -->
@@ -60,21 +60,28 @@ const template = (content) => `<!DOCTYPE html>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</body
+  <script href="bundle.js" src="bundle.js" defer></script>
+</body>
 </html>`;
 
-app.use('/bundle.js', () => {
+app.use('/bundle.js', (req, response) => {
   var filePath = path.join(__dirname, 'bundle.js');
-  var stat = fs.statSync(filePath);
+  console.log({ filePath })
+  try {
+    var stat = fs.readFileSync("bundle.js");
 
   response.writeHead(200, {
-      'Content-Type': 'text/javascript',
-      'Content-Length': stat.size
+      'Content-Type': 'text/plain',
+      // 'Content-Length': stat.size
   });
 
   var readStream = fs.createReadStream(filePath);
   // We replaced all the event handlers with a simple call to readStream.pipe()
   readStream.pipe(response);
+  } catch(e) {
+    response.send(e)
+  }
+  
 })
 
 // app.use(express.static())
@@ -84,11 +91,10 @@ app.use('/', (req, res) => {
 })
 app.use('/static/styles.css', (req, response) => {
   var filePath = path.join(__dirname, 'styles.css');
-  var stat = fs.statSync(filePath);
+  var stat = fs.readFileSync("styles.css");
 
   response.writeHead(200, {
-      'Content-Type': 'text/css',
-      'Content-Length': stat.size
+      'Content-Type': 'text/pain'
   });
 
   var readStream = fs.createReadStream(filePath);
@@ -107,7 +113,7 @@ exports.lambdaHandler = (event, context) => {
 
 exports.staticHandler = (event, context, callback) => {
   // awsServerlessExpress.proxy(server, event, context)
-  const cssContents = fs.readFileSync('./styles.css', 'utf8');
+  const cssContents = fs.readFileSync('styles.css', 'utf8');
   callback(null, {
     'statusCode': 200,
     "headers": {"Content-type": "text/css"},

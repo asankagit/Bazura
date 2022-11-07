@@ -1,9 +1,8 @@
 import App from "./Hello"
 import React from 'react'
 import ReactDOM from "react-dom";
-import ReactDom from "react-dom";
 
-ReactDom.hydrate(
+ReactDOM.hydrate(
     <App />,
-    document.getElementById('react-root')
+    document.getElementById('root')
 )

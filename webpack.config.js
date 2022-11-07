@@ -2,6 +2,7 @@ const AwsSamPlugin = require("aws-sam-webpack-plugin");
 const awsSamPlugin = new AwsSamPlugin();
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpack = require("webpack")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -17,6 +18,7 @@ module.exports = [
         hotUpdateChunkFilename: "hot_update.js",
         hotUpdateMainFilename: "hot_update.json"
     },
+    mode:"development",
     module: {
         rules: [
           { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
@@ -47,7 +49,7 @@ module.exports = [
               {
                 loader: "file-loader",
                 options: {
-                    name: "[name].css",
+                    name: "styles.css",
                     outputPath:  "./",
                     esModule: false,
                 }
@@ -68,6 +70,10 @@ module.exports = [
         ]
     },
     plugins: [
+
+        new HtmlWebpackPlugin({
+          title: "SSR title",
+        }),
         new webpack.DefinePlugin({
             __CONFIGS__: JSON.stringify({
                 service: 'React-ssr',
@@ -105,8 +111,7 @@ module.exports = [
     libraryTarget: 'commonjs'
   },
   target: 'node',
-  mode: 'production',
-
+  mode: 'development',
   // Add the AWS SAM Webpack plugin
   plugins: [
     awsSamPlugin,
