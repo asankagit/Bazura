@@ -44,10 +44,8 @@ const template = (content) => `<!DOCTYPE html>
 
 <body
   <div class="content">
-     <div id="app" class="wrap-inner">
-        ${content}
-     </div>
      <div id="root">${content}</div>
+     <div id="three"> Three rendering </div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- pixellio_adsense -->
@@ -89,17 +87,23 @@ app.use('/', (req, res) => {
   if (req.query.isme !== "true") { return res.send("Landing page") }
     res.send(template(renderToString(createElement(Hello, { to: req.query.to } ))))
 })
-app.use('/static/styles.css', (req, response) => {
+app.use('/styles.css', (req, response) => {
   var filePath = path.join(__dirname, 'styles.css');
-  var stat = fs.readFileSync("styles.css");
+  console.log({ filePath })
+  try {
+    // var stat = fs.readFileSync("bundle.js");
 
   response.writeHead(200, {
-      'Content-Type': 'text/pain'
+      'Content-Type': 'text/plain',
+      // 'Content-Length': stat.size
   });
 
   var readStream = fs.createReadStream(filePath);
   // We replaced all the event handlers with a simple call to readStream.pipe()
   readStream.pipe(response);
+  } catch(e) {
+    response.send(e)
+  }
 })
 
 app.use("/heart-beat", (req, res) => {
@@ -113,7 +117,7 @@ exports.lambdaHandler = (event, context) => {
 
 exports.staticHandler = (event, context, callback) => {
   // awsServerlessExpress.proxy(server, event, context)
-  const cssContents = fs.readFileSync('styles.css', 'utf8');
+  const cssContents = fs.readFileSync(path.join(__dirname, 'styles.css'), 'utf8');
   callback(null, {
     'statusCode': 200,
     "headers": {"Content-type": "text/css"},

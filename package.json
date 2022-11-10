@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "@mobiscroll/react-lite": "^4.10.2",
+    "@react-three/fiber": "^8.9.1",
     "aws-serverless-express": "^3.3.8",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
@@ -16,9 +17,10 @@
     "get-stream": "^6.0.1",
     "node-sass": "^7.0.1",
     "pdfkit": "^0.12.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "style-loader": "^1.1.4"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "style-loader": "^1.1.4",
+    "three": "^0.146.0"
   },
   "scripts": {
     "test": "mocha tests/unit/",
