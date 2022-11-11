@@ -42,7 +42,7 @@ function Hello(props) {
                     <Box position={[1.2, 0, 0]} />
                 </Canvas>
             </div>
-            {/* <div>{ThreeMap()}</div> */}
+            <div>{ThreeMap()}</div>
         </div>
     )
 }

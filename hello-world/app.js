@@ -82,7 +82,7 @@ app.use('/bundle.js', (req, response) => {
   
 })
 
-app.use('public', express.static(__dirname + 'static_content'))
+app.use('/public', express.static(path.resolve(__dirname, 'static_content')))
 // app.use(express.static())
 app.use('/', (req, res) => {
   // if (req.query.isme !== "true") { return res.send("Landing page") }
