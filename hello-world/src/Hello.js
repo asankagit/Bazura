@@ -3,6 +3,7 @@ import st from './cards.scss';
 import locationIcon from '../../assets/svg/location-dot-solid.svg'
 import { Box } from "./TheeDemo"
 import { Canvas, useFrame } from '@react-three/fiber'
+import ThreeMap from "./threejsMap"
 
 // class Hello extends Component {
 //     constructor(props) {
@@ -41,6 +42,7 @@ function Hello(props) {
                     <Box position={[1.2, 0, 0]} />
                 </Canvas>
             </div>
+            {/* <div>{ThreeMap()}</div> */}
         </div>
     )
 }

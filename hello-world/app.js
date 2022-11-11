@@ -45,7 +45,7 @@ const template = (content) => `<!DOCTYPE html>
 <body
   <div class="content">
      <div id="root">${content}</div>
-     <div id="three"> Three rendering </div>
+     <div id="three"> Three.js rendering sample  </div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- pixellio_adsense -->
@@ -82,9 +82,10 @@ app.use('/bundle.js', (req, response) => {
   
 })
 
+app.use('public', express.static(__dirname + 'static_content'))
 // app.use(express.static())
 app.use('/', (req, res) => {
-  if (req.query.isme !== "true") { return res.send("Landing page") }
+  // if (req.query.isme !== "true") { return res.send("Landing page") }
     res.send(template(renderToString(createElement(Hello, { to: req.query.to } ))))
 })
 app.use('/styles.css', (req, response) => {
