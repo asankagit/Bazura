@@ -19,6 +19,8 @@ import React, { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import Hello from './src/Hello';
 import World from './src/World';
+// import threeSSR from "./three_ssr"
+
 const express = require('express')
 const fs = require('fs');
 const awsServerlessExpress = require('aws-serverless-express')
