@@ -7,6 +7,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const nodeExternals = require('webpack-node-externals');
+
+
+console.log( path.join(__dirname, '/node_modules/jsdom/lib/api.js'),`${__dirname}`)
 module.exports = [
   {
     name: "browser",
@@ -117,9 +121,37 @@ module.exports = [
     awsSamPlugin,
     new MiniCssExtractPlugin({
       filename: 'styles.css',
-    })
+    }),
+    // new webpack.ExternalsPlugin('commonjs') 
+    // new webpack.IgnorePlugin({
+    //   resourceRegExp: /canvas/,
+    //   contextRegExp: /jsdom$/,
+    // }),
+    // new webpack.IgnorePlugin({ resourceRegExp: /jsdom/ })
   ],
-
+  
+  resolve: {
+      modules: ['node_modules'],
+      // alias: {
+      //   'react': path.resolve(__dirname, 'node_modules/react')
+      // },
+  },
+  // externalsPresets: {
+  //   node: true // in order to ignore built-in modules like path, fs, etc. 
+  // },
+  // externals: [nodeExternals(
+  //   {
+  //   // allowlist: ['react', 'react-dom/server', 'react-dom/client', '@react-three/fiber', 'react-dom', 'scheduler']
+  //   allowlist: [/react/]
+  //   }
+  // )], // just add this
+  // externals: {
+  //   // jsdom: "jsdom",
+  //   canvas: {},
+  //   bufferutil: "bufferutil",
+  //   "utf-8-validate": "utf-8-validate",
+  // },
+  
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
@@ -151,6 +183,11 @@ module.exports = [
           { loader: "css-loader", options: { modules: true} },
           // { loader: "sass-loader" }
         ]
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       }
     ]
   }
