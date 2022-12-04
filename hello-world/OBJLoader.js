@@ -1,4 +1,4 @@
-import {
+const {
 	BufferGeometry,
 	FileLoader,
 	Float32BufferAttribute,
@@ -12,7 +12,7 @@ import {
 	Points,
 	PointsMaterial,
 	Vector3
-} from "three";
+} = require("three");
 
 var OBJLoader = ( function () {
 
@@ -915,4 +915,4 @@ var OBJLoader = ( function () {
 
 } )();
 
-export { OBJLoader };
+module.exports = { OBJLoader };
