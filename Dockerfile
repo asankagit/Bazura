@@ -1,4 +1,4 @@
-FROM amazon/aws-lambda-nodejs:12
+FROM public.ecr.aws/lambda/nodejs:16
 COPY . / package*.json ./
 RUN rm -rf .aws-sam
 RUN npm rebuild node-sass --force
