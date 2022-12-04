@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+.ZXZqbvf1GLbUf2ynMDdZJ {
+  opacity: 1;
+}
+
+._2jFW5Q9rQ7o4k0Hy5jL0oK {
+  height: 100%;
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+h1 {
+  color: #235641;
+  font-family: 'Dancing Script';
+}
+
+._1oWkZGjBxJduvjuGQjm9Yd {
+  font-size: 50px;
+  font-family: Dancing Script;
+  color: #a99113;
+  margin: 15px;
+}
+
+._30U0B77_2Zw3S6u2H1I61Y{
+  text-decoration: underline 1px;
+  font-family: 'Dancing Script';
+  margin: 0;
+  font-size: 40px;
+}
+
+._29UN_xV8OHdSQdRq2XTe0p {
+  font-family: 'Open sans';
+  font-weight: 500;
+  margin: 0px 40%;
+  padding: 10px;
+
+}
+
+body {
+  background-repeat: no-repeat;
+  font-size: 2rem;
+  text-align: center;
+  color: black;
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dancing Script'), local('DancingScript'), url(http://themes.googleusercontent.com/static/fonts/dancingscript/v3/DK0eTGXiZjN6yA8zAEyM2bDH3ri20rYH10B2w3wbVeU.woff) format('woff');
+} 
+
+a {font-family: 'Roboto',serif,cursive; text-decoration:  none;}
+
+._2P3NU2Vjzz_4d9x7Gtamf5 {
+  top: 90%;
+  right: 60px;
+  position: absolute;
+  font-size: 1rem;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    background-repeat: no-repeat;
+    font-size: 2rem;
+    text-align: center;
+    color: black;
+  }
+}
+
+* {
+  -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+  color-adjust: exact !important;                 /* Firefox 48 – 96 */
+  print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+}
+
+._18NxVT_Dm1vZQgeH_R2prE {
+  display: flex;
+  justify-content: center;
+  margin-bottom: -40px;
+  margin-top: 10px;
+}
+
+.pGQE8p8sSinvfvs6NKihU {
+  width: 20px;
+  filter: contrast(0.2);
+}
+* {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body,
+  #_1AdMEPrl4dcdxZiYf7ATrs {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+  }
+  
+  #_1AdMEPrl4dcdxZiYf7ATrs {
+    overflow: auto;
+  }
+  
+  body {
+    position: fixed;
+    overflow: hidden;
+    overscroll-behavior-y: none;
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial,
+      sans-serif;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    background: #272727;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNi41IiBzdHJva2U9ImJsYWNrIi8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zMiAzMkw0MS4xOTI0IDQxLjE5MjRMNDEuODk5NSA0MC40ODUzTDMyLjcwNzEgMzEuMjkyOUw0MS4xOTI0IDIyLjgwNzZMNDAuNDg1MyAyMi4xMDA1TDMyIDMwLjU4NThMMjMuNTE0NyAyMi4xMDA1TDIyLjgwNzYgMjIuODA3NkwzMS4yOTI5IDMxLjI5MjlMMjIuMTAwNSA0MC40ODUzTDIyLjgwNzYgNDEuMTkyNEwzMiAzMloiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTUuMzY3MTEgMTIuNzM3M0wyLjY2OTQyIDIuNjY5NDJMMTIuNzM3MyA1LjM2NzExTDUuMzY3MTEgMTIuNzM3M1oiIHN0cm9rZT0iYmxhY2siLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJjbGlwMCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSJ3aGl0ZSIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg=='),
+      auto;
+  }
+  
