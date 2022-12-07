@@ -1,5 +1,8 @@
 FROM public.ecr.aws/lambda/nodejs:16
 COPY . / package*.json ./
+
+FROM ubuntu:trusty
+RUN apt-get update && apt-get install -y tini
 RUN apk add --update --no-cache python3 build-base gcc && ln -sf /usr/bin/python3 /usr/bin/python
 
 RUN rm -rf .aws-sam
