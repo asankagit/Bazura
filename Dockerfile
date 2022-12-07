@@ -2,7 +2,7 @@ FROM public.ecr.aws/lambda/nodejs:16
 COPY . / package*.json ./
 RUN rm -rf .aws-sam
 RUN npm rebuild node-sass --force
-RUN npm install
+RUN npm install --force
 RUN npm run build
 RUN pwd
 RUN ls -la 
