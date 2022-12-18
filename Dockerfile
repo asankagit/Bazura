@@ -24,7 +24,9 @@ RUN npm run build
 RUN pwd
 RUN ls -la 
 
-CMD [ ".aws-sam/build/HelloWorldFunction/app.lambdaHandler"]
+
+# WORKDIR /aws-sam
+CMD [ "./hello-world/three_ssr.lambdaHandler"]
 
 
 # https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/

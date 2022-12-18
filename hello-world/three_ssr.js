@@ -118,4 +118,7 @@ class App {
 const app = new App(1)
 console.log(x)
 
-export default app
+// export default app
+exports.lambdaHandler = (event, context) => {
+    app.render()
+}
