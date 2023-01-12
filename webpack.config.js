@@ -139,12 +139,12 @@ module.exports = [
   // externalsPresets: {
   //   node: true // in order to ignore built-in modules like path, fs, etc. 
   // },
-  // externals: [nodeExternals(
-  //   {
-  //   // allowlist: ['react', 'react-dom/server', 'react-dom/client', '@react-three/fiber', 'react-dom', 'scheduler']
-  //   allowlist: [/react/]
-  //   }
-  // )], // just add this
+  externals: [nodeExternals(
+    // {
+    // // allowlist: ['react', 'react-dom/server', 'react-dom/client', '@react-three/fiber', 'react-dom', 'scheduler']
+    // allowlist: [/react/]
+    // }
+  )], // just add this
   // externals: {
   //   // jsdom: "jsdom",
   //   canvas: {},
