@@ -2,10 +2,12 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "neuroEdu"
+stack_name = "helloPixellio"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-11ckjuy8eoxq8"
-s3_prefix = "neuroEdu"
+s3_prefix = "helloPixellio"
 region = "ap-south-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+disable_rollback = true
+
