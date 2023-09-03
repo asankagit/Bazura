@@ -38,7 +38,7 @@ const template = (content) => `<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <title>Pixellio </title>
-  <link href="./static/styles.css" rel="stylesheet">
+  <link href="/dist/styles.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
   <script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
@@ -60,7 +60,7 @@ const template = (content) => `<!DOCTYPE html>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-  <script href="bundle.js" src="bundle.js" defer></script>
+  <script href="bundle.js" src="client/bundle.js" defer></script>
 </body>
 </html>`;
 
@@ -83,9 +83,10 @@ app.use('/bundle.js', (req, response) => {
   }
   
 })
+console.log('path_resolve',path.resolve(__dirname, '.'))
+app.use('/client', express.static(path.resolve(__dirname, '.')));
+app.use('/dist', express.static(path.resolve(__dirname, '.')));
 
-app.use('/public', express.static(path.resolve(__dirname, 'static_content')))
-// app.use(express.static())
 app.use('/', (req, res) => {
   // if (req.query.isme !== "true") { return res.send("Landing page") }
     res.send(template(renderToString(createElement(Hello, { to: req.query.to } ))))
@@ -127,6 +128,8 @@ exports.staticHandler = (event, context, callback) => {
     'body': cssContents
   })
 }
+
+app.listen(3001)
 // exports.lambdaHandler = function(event, context, callback){
 //     const html = renderToString(createElement(Hello));
 

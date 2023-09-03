@@ -10,7 +10,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const nodeExternals = require('webpack-node-externals');
 
 
-console.log( path.join(__dirname, '/node_modules/jsdom/lib/api.js'),`${__dirname}`)
 module.exports = [
   {
     name: "browser",
@@ -43,34 +42,41 @@ module.exports = [
             test: /\.(woff|ttf|otf|eot|woff2)$/i,
             loader: "file-loader"
           },
-          {
-            test: /\.[s]?css$/,
-            include: [
-              path.join(__dirname, "/hello-world/src"),
-              path.join(__dirname, "node_modules")
-            ],
-            use: [
-              {
-                loader: "file-loader",
-                options: {
-                    name: "[name].css",
-                    outputPath:  "./",
-                    esModule: false,
-                }
+        {
+          test: /\.[s]?css$/,
+          include: [
+            path.join(__dirname, "/hello-world/src"),
+            path.join(__dirname, "node_modules")
+          ],
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "[name].css",
+                outputPath: "/dist",
+                esModule: false,
+              }
             },
             {
-                loader: "extract-loader",
+              loader: "extract-loader",
             },
-              // MiniCssExtractPlugin.loader,
-              { loader: "css-loader", 
+            // MiniCssExtractPlugin.loader,
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: 'dist', // Set the public path for the CSS file
+              },
+            },
+            {
+              loader: "css-loader",
               // options: { modules: true} 
               options: {
                 esModule: false,
-            }
+              }
             },
-              // { loader: "sass-loader" }
-            ]
-          }
+            // { loader: "sass-loader" }
+          ]
+        }
         ]
     },
     plugins: [
@@ -85,9 +91,14 @@ module.exports = [
                 environment: process.env.BUILD_ENVIRONMENT || "local"
             })
         }),
-        // new MiniCssExtractPlugin({
-        //     filename: "styles.css"
-        // }),
+        new webpack.HotModuleReplacementPlugin(), // Enable HMR for client
+        new CleanWebpackPlugin({
+          cleanOnceBeforeBuildPatterns: ['**/*hot-update*'],
+        }),
+        new MiniCssExtractPlugin({
+            // path:  path.join(__dirname, "/.aws-sam/build/HelloWorldFunction"),
+            filename: "dist/styles.css"
+        }),
         // new CleanWebpackPlugin(["./static/*.js", "./static/*.json", "./static/styles.css", "./static/*.woff", "./static/*.woff2"]),
         // new WebpackAutoInject({
         //     components: {
@@ -106,6 +117,7 @@ module.exports = [
         // })
     ]
 },
+// server
 {
 
   entry: () => awsSamPlugin.entry(),
@@ -121,6 +133,10 @@ module.exports = [
     awsSamPlugin,
     new MiniCssExtractPlugin({
       filename: 'styles.css',
+    }),
+    new webpack.HotModuleReplacementPlugin(), // Enable HMR for server
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*hot-update*'],
     }),
     // new webpack.ExternalsPlugin('commonjs') 
     // new webpack.IgnorePlugin({

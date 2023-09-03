@@ -6,3 +6,11 @@ ReactDOM.hydrate(
     <App />,
     document.getElementById('root')
 )
+
+// Enable Webpack HMR for the component
+// if (module.hot) {
+//     module.hot.accept('./', () => {
+//         const NextApp = require('./').default;
+//         render(NextApp);
+//     });
+// }

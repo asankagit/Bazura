@@ -7,14 +7,18 @@
       "request": "attach",
       "address": "localhost",
       "port": 5858,
-      "localRoot": "${workspaceRoot}/.aws-sam/build/HelloWorldFunction",
+      "localRoot": "${workspaceFolder}/.aws-sam/build/HelloWorldFunction",
       "remoteRoot": "/var/task",
       "protocol": "inspector",
       "stopOnEntry": false,
       "outFiles": [
-        "${workspaceRoot}/.aws-sam/build/HelloWorldFunction/app.js"
+        "${workspaceFolder}/.aws-sam/build/HelloWorldFunction/**/*.js"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "skipFiles": [
+        "/var/runtime/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
     },
     {
       "name": "StaticContent",
@@ -22,14 +26,18 @@
       "request": "attach",
       "address": "localhost",
       "port": 5858,
-      "localRoot": "${workspaceRoot}/.aws-sam/build/StaticContent",
+      "localRoot": "${workspaceFolder}/.aws-sam/build/StaticContent",
       "remoteRoot": "/var/task",
       "protocol": "inspector",
       "stopOnEntry": false,
       "outFiles": [
-        "${workspaceRoot}/.aws-sam/build/StaticContent/app.js"
+        "${workspaceFolder}/.aws-sam/build/StaticContent/**/*.js"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "skipFiles": [
+        "/var/runtime/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
     }
   ]
 }
