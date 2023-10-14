@@ -47,7 +47,7 @@ const template = (content) => `<!DOCTYPE html>
 <body
   <div class="content">
      <div id="root">${content}</div>
-     <div id="three"> Three.js rendering sample  </div>
+     <div id="three">  </div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- pixellio_adsense -->
