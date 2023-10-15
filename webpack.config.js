@@ -21,6 +21,11 @@ module.exports = [
         hotUpdateChunkFilename: "hot_update.js",
         hotUpdateMainFilename: "hot_update.json"
     },
+    // externals: {
+    //   three: 'THREE',
+    // //   'react-three-fiber': 'reactThreeFiber',
+    // //   '@react-three/drei': 'drei',
+    // },
     mode:"development",
     module: {
         rules: [
@@ -115,6 +120,12 @@ module.exports = [
         //         },
         //     }
         // })
+        // new webpack.ProvidePlugin({
+        //   THREE: 'three',
+        //   three: 'three'
+        // //   ReactThreeFiber: 'react-three-fiber',
+        // //   Drei: '@react-three/drei',
+        // }),
     ]
 },
 // server

@@ -4,7 +4,7 @@ import locationIcon from '../../assets/svg/location-dot-solid.svg'
 import { Box } from "./TheeDemo"
 import { Canvas, useFrame, Camera, extend,  TextureLoader  } from '@react-three/fiber'
 import { useGLTF, Edges, MeshPortalMaterial, CameraControls, Environment, PivotControls, OrbitControls,
-   Sky as Skypremitive, Terrain, Ground
+   Sky as Skypremitive, Terrain, Ground, PerspectiveCamera
 } from '@react-three/drei'
 import { useControls } from 'leva'
 import * as THREE from 'three';
@@ -80,24 +80,6 @@ const App = () => (
       <mesh castShadow receiveShadow>
         <boxGeometry args={[2, 2, 2]} />
         <Edges />
-        {/* <Side rotation={[0, 0, 0]} bg="orange" index={0}>
-          <torusGeometry args={[0.65, 0.3, 64]} />
-        </Side>
-        <Side rotation={[0, Math.PI, 0]} bg="lightblue" index={1}>
-          <torusKnotGeometry args={[0.55, 0.2, 128, 32]} />
-        </Side>
-        <Side rotation={[0, Math.PI / 2, Math.PI / 2]} bg="lightgreen" index={2}>
-          <boxGeometry args={[1.15, 1.15, 1.15]} />
-        </Side>
-        <Side rotation={[0, Math.PI / 2, -Math.PI / 2]} bg="aquamarine" index={3}>
-          <octahedronGeometry />
-        </Side>
-        <Side rotation={[0, -Math.PI / 2, 0]} bg="indianred" index={4}>
-          <icosahedronGeometry />
-        </Side>
-        <Side rotation={[0, Math.PI / 2, 0]} bg="hotpink" index={5}>
-          <dodecahedronGeometry />
-        </Side> */}
       </mesh>
     </PivotControls>
     <CameraControls makeDefault />
@@ -137,58 +119,40 @@ const DEG45 = Math.PI / 4;
 function Hello(props) {
     const cameraControlRef = useRef(null);
 
-    // const [terrainProps, setTerrainProps] = React.useState({
-    //   heightmap: [],
-    //   // texture: 'https://example.com/terrain.jpg',
-    //   material: new THREE.MeshStandardMaterial({
-    //     color: 'white',
-    //   }),
-    // });
-  
-    // // Load the terrain heightmap
-    // React.useEffect(() => {
-    //   fetch('https://example.com/heightmap.png')
-    //     .then(response => response.arrayBuffer())
-    //     .then(arrayBuffer => {
-    //       const heightmap = new Uint8Array(arrayBuffer);
-    //       setTerrainProps({ ...terrainProps, heightmap });
-    //     });
-    // }, [])
-
     // Create a state variable to store the terrain heightmap
   const [heightmap, setHeightmap] = useState([]);
 
 
   // Load the terrain heightmap
-  useEffect(() => {
-    fetch('https://jurnsearch.files.wordpress.com/2020/12/hmap.jpg')
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const heightmap = new Uint8Array(arrayBuffer);
-        setHeightmap(heightmap);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://jurnsearch.files.wordpress.com/2020/12/hmap.jpg')
+  //     .then(response => response.arrayBuffer())
+  //     .then(arrayBuffer => {
+  //       const heightmap = new Uint8Array(arrayBuffer);
+  //       setHeightmap(heightmap);
+  //     });
+  // }, []);
   
 
   // Generate the terrain mesh
-  const mesh = () => {
-    const geometry = new PlaneGeometry( 7500, 7500, heightmap.length - 1, heightmap[0].length - 1 );
-    geometry.rotateX( - Math.PI / 2 );
+  // const mesh = () => {
+  //   const geometry = new PlaneGeometry( 7500, 7500, heightmap.length - 1, heightmap[0].length - 1 );
+  //   geometry.rotateX( - Math.PI / 2 );
 
-    const vertices = geometry.attributes.position.array;
+  //   const vertices = geometry.attributes.position.array;
 
-    for ( let i = 0, j = 0, l = vertices.length; i < l; i ++, j += 3 ) {
+  //   for ( let i = 0, j = 0, l = vertices.length; i < l; i ++, j += 3 ) {
 
-      vertices[ j + 1 ] = heightmap[i] * 10;
+  //     vertices[ j + 1 ] = heightmap[i] * 10;
 
-    }
+  //   }
 
-    const material = new MeshBasicMaterial( { map: texture } );
+  //   const material = new MeshBasicMaterial( { map: texture } );
 
-    return (
-      <Mesh geometry={geometry} material={material} />
-    );
-  };
+  //   return (
+  //     <Mesh geometry={geometry} material={material} />
+  //   );
+  // };
 
      // Generate the terrain texture
   const texture = () => {
@@ -230,42 +194,33 @@ function Hello(props) {
     );
     
   };
-    return (
-        <div className={st.top}>
-            <div className={st.bg}>
-                <h1 onClick={() => alert('woo ha3 hoo')}> WebGl world playground</h1>
-            </div>
-            <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
-                {/* {App()}
-                <Canvas>
-                    <ambientLight />
-                    <pointLight position={[100, 100, 100]} />
-                    <Box position={[-1.2, 0, 0]} />
-                    <Box position={[1.2, 0, 0]} />
-                </Canvas> */}
-                
-                  <Canvas height={"100%"} camera={{ position: [0, 0, 500], fov: 75 }}
-                // camera={{ position: [0, 0, 50] }}
-                > 
-                  <ambientLight intensity={0.5} />
-                  <directionalLight position={[5, 5, 5]} />
-                  {/* <Sky /> */}
-                  <Sun />
-                  <MySky />
-                  <OrbitControls />
-                  {/* <Skypremitive
-                      distance={450000}
-                      sunPosition={[5, 1, 8]}
-                      inclination={0}
-                      azimuth={0.25}
-                      scale={450000}
-                      rayleigh={1}
-                      // {...props}
-                  /> */}
-                </Canvas>
-            </div>
-        </div>
-    )
+
+  return (
+    <div className={st.top}>
+      <div className={st.bg}>
+        <h1 onClick={() => alert('woo ha3 hoo')}> WebGl world playground</h1>
+      </div>
+      <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
+        <Canvas height={"100%"} camera={{ position: [0, 0, 500], fov: 75 }}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[0, 0, 100]} />
+          <Sun />
+          <MySky />
+          <PerspectiveCamera position={[0, 0, 1000]} />
+          <OrbitControls />
+          {/* <Skypremitive
+            distance={450000}
+            sunPosition={[5, 1, 8]}
+            inclination={0}
+            azimuth={0.25}
+            scale={450000}
+            rayleigh={1}
+          // {...props}
+          /> */}
+        </Canvas>
+      </div>
+    </div>
+  )
 }
 
 export default Hello;

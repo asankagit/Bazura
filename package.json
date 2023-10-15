@@ -7,6 +7,8 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "@babel/runtime-corejs3": "^7.23.2",
     "@mobiscroll/react-lite": "^4.10.2",
     "@react-three/drei": "^9.88.2",
     "@react-three/fiber": "^8.9.1",
@@ -26,6 +28,7 @@
     "pdfkit": "^0.12.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "regenerator-runtime": "^0.14.0",
     "socket.io": "^4.5.3",
     "style-loader": "^1.1.4",
     "three": "^0.146.0",
@@ -33,7 +36,7 @@
   },
   "scripts": {
     "test": "mocha tests/unit/",
-    "build": "webpack --config webpack.config.js --hot --watch"
+    "build": "webpack --config webpack.config.js --hot --watch --mode=production"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
