@@ -6,6 +6,8 @@ import { Sky } from '@react-three/drei';
 // import { Sky } from 'three/addons/objects/Sky.js';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 // import 'regenerator-runtime';
+import Noise from 'noisejs';
+
 
 const CustomSky = () => {
   const skyMaterial = useRef();
@@ -119,70 +121,9 @@ const TerrainLocalImg = ({ imagePath, width, height, scale }) => {
   );
 };
 
+
 const Terrain = ({ url, width, height, scale }) => {
-  const [heightmap, setHeightmap] = useState(null);
-  const geometryRef = useRef(null);
-
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        // const loadedHeightmap = await new TextureLoader().load(url);
-        // console.log({ url }, { loadedHeightmap })
-        // setHeightmap(loadedHeightmap);
-        console.log({ url })
-      } catch (error) {
-        console.error('Error loading image:', error);
-      }
-    };
-
-    loadImage();
-  }, []);
-
-  //  useEffect(() => {
-  //   if (!heightmap) return;
-
-  //   const createGeometry = () => {
-  //     // if (!heightmap) return null
-  //     // const canvas = document.createElement('canvas');
-  //     // const context = canvas.getContext('2d');
-  //     // canvas.width = width;
-  //     // canvas.height = height;
-  //     // context.drawImage(heightmap.image, 0, 0, width, height);
-
-  //     // const imageData = context.getImageData(0, 0, width, height).data;
-
-  //     // const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
-
-  //     // for (let i = 0; i < geometry.vertices.length; i++) {
-  //     //   const x = i % width;
-  //     //   const y = Math.floor(i / width);
-  //     //   const heightValue = imageData[(y * width + x) * 4] / 255;
-
-  //     //   geometry.vertices[i].z = heightValue * scale;
-  //     // }
-
-  //     // geometry.computeFaceNormals();
-  //     // geometry.computeVertexNormals();
-
-  //     // return geometry;
-  //     return null
-  //   };
-
-  //   geometryRef.current = createGeometry();
-  // }, [heightmap, width, height, scale]);
-
-  // return (
-  //   // <mesh geometry={geometryRef.current}>
-  //   //   <meshStandardMaterial color="green" />
-  //   // </mesh>
-  // );
-  
-  return (
-    <mesh rotation-x={-Math.PI / 2} receiveShadow position={[0, 0, 10]}>
-      <planeGeometry args={[600, 600]} />
-      <meshStandardMaterial color={0x00ff00} />
-    </mesh>
-  );
+  return null
 }
 
 //   const heightmap = generateHeight(256, 256);
@@ -223,7 +164,7 @@ const Ground = () => {
 
 const PlaneMesh = () => {
   // Create a new TerrainGeometry object.
-  const terrainGeometry = new THREE.TerrainGeometry(100, 100);
+  const terrainGeometry = new THREE.TerrainGeometry(100, 100);// not exist in three js standard lib
 
   // Set the heightmap of the terrain.
   terrainGeometry.heightmap = [
@@ -278,7 +219,7 @@ export const MySky = () => {
       <ambientLight color="#00000ff" intensity={0.5} />
       <pointLight position={[0, 1, 100]} intensity={10} distance={10} color={"red"}/>
       <light />
-      {/* <PlaneMesh /> */}
+      {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
       <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} />
     </>
