@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { Sky } from '@react-three/drei';
 // import { Sky } from 'three/addons/objects/Sky.js';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
-// import 'regenerator-runtime';
+import GroundSolo from "./groundSolo";
 import Noise from 'noisejs';
 
 
@@ -123,7 +123,20 @@ const TerrainLocalImg = ({ imagePath, width, height, scale }) => {
 
 
 const Terrain = ({ url, width, height, scale }) => {
-  return null
+  const groundGeo = new THREE.PlaneGeometry(10000, 10000);
+  const groundMat = new THREE.MeshLambertMaterial({ color: 0xcccccc, side: THREE.DoubleSide });
+  groundMat.color.setHSL(0.095, 1, 0.75);
+
+  groundGeo.rotateX(- Math.PI * 0.5);
+
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.position.y = -33;
+  ground.position.z =  5
+  ground.rotation.x = - Math.PI / 2;
+  ground.receiveShadow = true;
+  
+
+  return <mesh geometry={groundGeo} material={groundMat} />;
 }
 
 //   const heightmap = generateHeight(256, 256);
@@ -191,6 +204,59 @@ const PlaneMesh = () => {
   );
 };
 
+export const SkyWithShaders = () => {
+  const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+	hemiLight.color.setHSL( 0.6, 1, 0.6 );
+// const fog = new THREE.Fog( scene.background, 1, 5000 );
+
+  const vertexShader = `varying vec3 vWorldPosition;
+
+  void main() {
+
+    vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+    vWorldPosition = worldPosition.xyz;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+  }`;
+
+  const fragmentShader = `			uniform vec3 topColor;
+  uniform vec3 bottomColor;
+  uniform float offset;
+  uniform float exponent;
+
+  varying vec3 vWorldPosition;
+
+  void main() {
+
+    float h = normalize( vWorldPosition + offset ).y;
+    gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+
+  }`;
+  const uniforms = {
+    'topColor': { value: new THREE.Color(0x03befc) },
+    'bottomColor': { value: new THREE.Color(0x8c9091) },
+    'offset': { value: 33 },
+    'exponent': { value: 0.6 }
+  };
+  uniforms['topColor'].value.copy(hemiLight.color);
+
+  // fog.color.copy(uniforms['bottomColor'].value);
+
+  const skyGeo = new THREE.SphereGeometry(500, 32, 15);
+  skyGeo.rotateX(- Math.PI * 0.5);
+
+  const skyMat = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+    side: THREE.BackSide
+  });
+
+  //const sky = new THREE.Mesh(skyGeo, skyMat);
+  return <mesh geometry={skyGeo} material={skyMat} position={[0,0,0]}/>
+}
+
 export const MySky = () => {
   const sky = useRef();
   const [canvasHeight, setCanvasHeight] = useState(500);
@@ -213,14 +279,17 @@ export const MySky = () => {
 
   return (
     <>
-      <Sky ref={sky} />
+      {/*  default sky box */}
+      {/* <Sky ref={sky} />  */}
+      
       {/* <Ground /> */}
-      <PerspectiveCamera position={[0, 0, 100]} />
-      <ambientLight color="#00000ff" intensity={0.5} />
-      <pointLight position={[0, 1, 100]} intensity={10} distance={10} color={"red"}/>
+      {/* <PerspectiveCamera position={[0, 0, 100]} /> */}
+      {/* <ambientLight color="#00000ff" intensity={0.5} /> */}
+      {/* <pointLight position={[0, 1, 100]} intensity={10} distance={10} color={"red"}/> */}
       <light />
       {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
+      {/* <GroundSolo /> */}
       <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} />
     </>
 

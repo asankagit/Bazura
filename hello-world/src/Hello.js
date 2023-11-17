@@ -9,7 +9,7 @@ import { useGLTF, Edges, MeshPortalMaterial, CameraControls, Environment, PivotC
 import { useControls } from 'leva'
 import * as THREE from 'three';
 import Noise from 'noisejs';
-import {MySky, Sun} from "./SkyGround";
+import {MySky, Sun, SkyWithShaders} from "./SkyGround";
 
 
 // import { OrbitControls } from 'drei';
@@ -23,8 +23,8 @@ const Sky = () => {
   // Use the useFrame hook to animate the sky
   useFrame(() => {
     if (meshRef.current) {
-      meshRef.current.rotation.x += 0.002;
-      meshRef.current.rotation.y += 0.002;
+      meshRef.current.rotation.x = 0.002;
+      meshRef.current.rotation.y = 0.002;
     }
   });
 
@@ -205,8 +205,9 @@ function Hello(props) {
           <ambientLight intensity={0.5} />
           <directionalLight position={[0, 0, 100]} />
           <Sun />
+          <SkyWithShaders/>
           <MySky />
-          <PerspectiveCamera position={[0, 0, 1000]} />
+          <PerspectiveCamera position={[0, 0, 1000]} rotation={[ 0,0,100]}/>
           <OrbitControls />
           {/* <Skypremitive
             distance={450000}

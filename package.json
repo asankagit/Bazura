@@ -36,7 +36,8 @@
   },
   "scripts": {
     "test": "mocha tests/unit/",
-    "build": "webpack --config webpack.config.js --hot --watch --mode=production"
+    "build-prod": "webpack --config webpack.config.js --hot --watch --mode=production",
+    "build": "webpack --config webpack.config.js --hot --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
