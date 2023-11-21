@@ -116,84 +116,18 @@ function Side({ rotation = [0, 0, 0], bg = '#f0f0f0', children, index }) {
 const DEG45 = Math.PI / 4;
 
 
+const CameraHelper = () => {
+  const camera = new THREE.PerspectiveCamera(60, 1, 1, 2000);
+  return <group position={[0, 100, 500]}>
+    <cameraHelper args={[camera]} />
+  </group>
+}
+
 function Hello(props) {
     const cameraControlRef = useRef(null);
 
     // Create a state variable to store the terrain heightmap
   const [heightmap, setHeightmap] = useState([]);
-
-
-  // Load the terrain heightmap
-  // useEffect(() => {
-  //   fetch('https://jurnsearch.files.wordpress.com/2020/12/hmap.jpg')
-  //     .then(response => response.arrayBuffer())
-  //     .then(arrayBuffer => {
-  //       const heightmap = new Uint8Array(arrayBuffer);
-  //       setHeightmap(heightmap);
-  //     });
-  // }, []);
-  
-
-  // Generate the terrain mesh
-  // const mesh = () => {
-  //   const geometry = new PlaneGeometry( 7500, 7500, heightmap.length - 1, heightmap[0].length - 1 );
-  //   geometry.rotateX( - Math.PI / 2 );
-
-  //   const vertices = geometry.attributes.position.array;
-
-  //   for ( let i = 0, j = 0, l = vertices.length; i < l; i ++, j += 3 ) {
-
-  //     vertices[ j + 1 ] = heightmap[i] * 10;
-
-  //   }
-
-  //   const material = new MeshBasicMaterial( { map: texture } );
-
-  //   return (
-  //     <Mesh geometry={geometry} material={material} />
-  //   );
-  // };
-
-     // Generate the terrain texture
-  const texture = () => {
-
-    useEffect(() => {
-      const canvas = window.document.createElement('canvas');
-      canvas.width =  1000;
-      canvas.height = 1000;
-  
-      const context = canvas.getContext('2d');
-      context.fillStyle = '#000';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-  
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  
-      for (let i = 0, j = 0, l = imageData.length; i < l; i += 4, j ++ ) {
-  
-        const shade = heightmap[j] / 255;
-  
-        imageData[i] = (96 + shade * 128) * (0.5 + heightmap[j] * 0.007);
-        imageData[i + 1] = (32 + shade * 96) * (0.5 + heightmap[j] * 0.007);
-        imageData[i + 2] = (shade * 96) * (0.5 + heightmap[j] * 0.007);
-  
-      }
-  
-      context.putImageData(imageData, 0, 0);
-  
-      return (
-        <Canvas>
-          {/* <TextureLoader texture={canvas} /> */}
-        </Canvas>
-      );
-    }, [])
-
-    return (
-      <Canvas>
-        <Sky />
-      </Canvas>
-    );
-    
-  };
 
   return (
     <div className={st.top}>
@@ -201,13 +135,16 @@ function Hello(props) {
         <h1 onClick={() => alert('woo ha3 hoo')}> WebGl world playground</h1>
       </div>
       <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
-        <Canvas height={"100%"} camera={{ position: [0, 0, 500], fov: 75 }}>
-          <ambientLight intensity={0.5} />
+        <Canvas height={"100%"} 
+        camera={{ position: [0, 100, 500], fov: 60, rotateY : Math.PI * 0.5,  far:2000, rotation:new THREE.Euler(Math.PI * 0.25, 0,0,'XYZ' )}}
+        >
+          <ambientLight intensity={0.1}  color={"white"}/>
           <directionalLight position={[0, 0, 100]} />
           <Sun />
           <SkyWithShaders/>
           <MySky />
-          <PerspectiveCamera position={[0, 0, 1000]} rotation={[ 0,0,100]}/>
+          {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
+          <CameraHelper />
           <OrbitControls />
           {/* <Skypremitive
             distance={450000}

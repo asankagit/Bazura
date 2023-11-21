@@ -53,7 +53,7 @@ export const Sun = () => {
     }
   });
 
-  return <mesh ref={meshRef} geometry={geometry} material={material} />;
+  return <mesh ref={meshRef} geometry={geometry} material={material} position={[0, 300, 0]}/>;
 }
 
 const GroundNoImpact = () => {
@@ -124,14 +124,14 @@ const TerrainLocalImg = ({ imagePath, width, height, scale }) => {
 
 const Terrain = ({ url, width, height, scale }) => {
   const groundGeo = new THREE.PlaneGeometry(10000, 10000);
-  const groundMat = new THREE.MeshLambertMaterial({ color: 0xcccccc, side: THREE.DoubleSide });
-  groundMat.color.setHSL(0.095, 1, 0.75);
+  const groundMat = new THREE.MeshLambertMaterial({ color: 0x8c9091});
+  groundMat.color.setHSL(0.295, 11, 0.75);
 
-  groundGeo.rotateX(- Math.PI * 0.5);
+  groundGeo.rotateX(-Math.PI * 0.5);
 
   const ground = new THREE.Mesh(groundGeo, groundMat);
-  ground.position.y = -33;
-  ground.position.z =  5
+  ground.position.y = 10;
+  ground.position.z =  0;
   ground.rotation.x = - Math.PI / 2;
   ground.receiveShadow = true;
   
@@ -204,10 +204,13 @@ const PlaneMesh = () => {
   );
 };
 
+export const FogEffect = () => {
+  return <fog attach="fog" color="0x8c9091" near={10} far={5000} />
+}
+
 export const SkyWithShaders = () => {
   const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
 	hemiLight.color.setHSL( 0.6, 1, 0.6 );
-// const fog = new THREE.Fog( scene.background, 1, 5000 );
 
   const vertexShader = `varying vec3 vWorldPosition;
 
@@ -290,7 +293,8 @@ export const MySky = () => {
       {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
       {/* <GroundSolo /> */}
-      <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} />
+      <FogEffect />
+      <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} />
     </>
 
   );
