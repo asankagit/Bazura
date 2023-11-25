@@ -12,79 +12,8 @@ import Noise from 'noisejs';
 import {MySky, Sun, SkyWithShaders} from "./SkyGround";
 
 
-// import { OrbitControls } from 'drei';
-
 // Extend the THREE namespace with OrbitControls
 extend({ OrbitControls });
-
-const Sky = () => {
-  const meshRef = useRef();
-
-  // Use the useFrame hook to animate the sky
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = 0.002;
-      meshRef.current.rotation.y = 0.002;
-    }
-  });
-
-  // Create a new noise instance
-  const noise = new Noise.Noise();
-
-  // Create a new canvas element.
-  const canvas = document.createElement('canvas');
-
-  // Get the context of the canvas element.
-  const ctx = canvas.getContext('2d');
-
-  // Set the dimensions of the canvas element.
-  canvas.width = 556; // Increase canvas size for better resolution
-  canvas.height = 5506;
-
-  // Iterate over each pixel of the canvas element.
-  for (let y = 0; y < canvas.height; y++) {
-    for (let x = 0; x < canvas.width; x++) {
-      // Generate a random noise value.
-      const noiseValue = noise.simplex2(x / 50, y / 50); // Adjust scale for better results
-
-      // Map the noise value to the range [0, 1]
-      const mappedValue = (noiseValue + 1) / 2;
-
-      // Set the opacity of the pixel based on the noise value.
-      ctx.fillStyle = `rgba(255, 255, 255, ${mappedValue})`;
-      ctx.fillRect(x, y, 1, 1);
-    }
-  }
-
-  // Create a new texture from the canvas element.
-  const texture = new THREE.CanvasTexture(canvas);
-
-  // Create a new Material object.
-  const material = new THREE.MeshBasicMaterial({
-    map: texture,
-    side: THREE.DoubleSide, // Make sure the material is visible from both sides
-    transparent: true, // Enable transpare
-  });
-
-  // Create a new SphereGeometry object.
-  const geometry = new THREE.BoxGeometry(1000, 1000, 1000);// new THREE.SphereGeometry(500, 100, 100); // Adjust sphere size
-
-  return (
-    <mesh ref={meshRef} geometry={geometry} material={material} />
-  );
-};
-
-const App = () => (
-  <Canvas shadows camera={{ position: [-3, 0.5, 3] }}>
-    <PivotControls anchor={[-1.1, -1.1, -1.1]} scale={0.75} lineWidth={3.5}>
-      <mesh castShadow receiveShadow>
-        <boxGeometry args={[2, 2, 2]} />
-        <Edges />
-      </mesh>
-    </PivotControls>
-    <CameraControls makeDefault />
-  </Canvas>
-)
 
 function Side({ rotation = [0, 0, 0], bg = '#f0f0f0', children, index }) {
   const mesh = useRef()
@@ -135,11 +64,12 @@ function Hello(props) {
         <h1 onClick={() => alert('woo ha3 hoo')}> WebGl world playground</h1>
       </div>
       <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
-        <Canvas height={"100%"} 
+        <Canvas height={"100%"}  style={{ width: '100%', height: '100%' }}
         camera={{ position: [0, 100, 500], fov: 60, rotateY : Math.PI * 0.5,  far:2000, rotation:new THREE.Euler(Math.PI * 0.25, 0,0,'XYZ' )}}
         >
           <ambientLight intensity={0.1}  color={"white"}/>
           <directionalLight position={[0, 0, 100]} />
+          <directionalLight position={[-20, 100, -100]}  color={'gary'}/>
           <Sun />
           <SkyWithShaders/>
           <MySky />

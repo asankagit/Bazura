@@ -292,9 +292,9 @@ export const MySky = () => {
       <light />
       {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
-      {/* <GroundSolo /> */}
+      <GroundSolo />
       <FogEffect />
-      <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} />
+      {/* <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} /> */}
     </>
 
   );
