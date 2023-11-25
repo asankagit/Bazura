@@ -3,211 +3,6 @@ import * as THREE from 'three';
 import React, { useState, useEffect, useRef } from 'react';
 //Reference: https://codepen.io/BrendonC/pen/wEmWaP
 
-const MyComponent = () => {
-  const meshRef = React.useRef();
-  const [texture, setTexture] = useState(null);
-  const [mesh, setMesh] = useState(null);
-  const [vertices, setVertices] = useState(null);
-
-  // const heightMapImage = useLoader(THREE.TextureLoader, 'https://i.imgur.com/KcbQyP4.png');
-
-  const loadTexture = () => {
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('http://i.imgur.com/KcbQyP4.png', (texture) => {
-      // http://localhost:3001/dist/heightmap.png
-      setTexture(texture);
-    });
-  };
-
-  useEffect(() => {
-    loadTexture();
-  }, []);
-
-  useEffect(() => {
-    if (texture) {
-      const mesh = setupNoiseTexture()
-      setMesh(mesh)
-    }
-
-  }, [texture]);
-
-
-  const setupNoiseTexture = () => {
-    const uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-      resolution: {
-        type: 'v2',
-        value: new THREE.Vector2(
-          window.innerWidth,
-          window.innerHeight
-        )
-      },
-      amplitude: {
-        type: 'f',
-        value: 0
-      },
-      light: {
-        type: 'v3',
-        value: new THREE.Vector3(
-          100, 150, 100
-        )
-      },
-      heightMap: {
-        type: "t",
-        value: texture
-      }
-    };
-
-    let attributes = {
-      displacement: {
-        type: 'f',
-        value: []
-      }
-    };
-
-
-    const vertexShader = `varying vec3 vNormal;
-      varying vec3 light;
-      
-      uniform vec2 resolution;
-      uniform float time;
-      uniform float amplitude;
-      uniform sampler2D heightMap;
-      
-      attribute float displacement;
-      
-      void main() {
-        vec3 newPosition = position;
-        float timeStep = time * 0.025;
-        
-        vec2 coords = vec2(uv);
-        coords.y += timeStep;
-        
-        float uvScale = sin(timeStep) * 0.75;
-        
-        float redChannel = texture2D(heightMap, coords + uvScale + sin(time * 0.01)).r;
-        newPosition.z = redChannel * displacement;
-        vNormal = normal * newPosition;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-        
-      }`;
-    const fragmentShader = `varying vec3 vNormal;
-  
-      uniform float time;
-      uniform vec2 resolution;
-      uniform vec3 light;
-      
-      void main() {
-        vec2 st = gl_FragCoord.xy / resolution.xy;
-        vec3 color = vec3(1.0, 0.35, 0.0);
-        vec3 newLight = normalize(light);
-        float dotProduct = max(0.0, dot(vNormal, newLight));
-        //gl_FragColor = vec4(vec3(dotProduct) * color, 1.0);
-        gl_FragColor = vec4(0.20, 0.90, 0.0, 1.0); // Red color
-      }`;
-
-
-      console.log({ uniforms })
-
-    let material = new THREE.ShaderMaterial({
-      fragmentShader: fragmentShader,
-      vertexShader: vertexShader,
-      uniforms: uniforms,
-      attributes: attributes,
-      wireframe: true,
-      // flatShading: false,
-      //displacement
-      // displacementMap: texture,
-      // displacementScale: 1
-    });
-    let geometry = new THREE.BufferGeometry();
-    //new THREE.PlaneGeometry(4000, 300, 6000, 600);
-    const vertices = new Float32Array( [
-      -1.0, -1.0,  1.0, // v0
-       1.0, -1.0,  1.0, // v1
-       1.0,  1.0,  1.0, // v2
-      -100.0,  1000.0,  500.0, // v3
-       200.0,  200.0,  200.0,
-      //  0.0,  0.0,  0.0,
-    ] );
-    
-
-    
-    const colors = new THREE.Float32BufferAttribute([
-      Math.random() * 255,Math.random() * 255,Math.random() * 255,Math.random() * 255,Math.random() * 255,Math.random() * 255
-    ])
-    
-    const colorAttribute = new THREE.Uint8BufferAttribute( colors, 4 );
-    const indices = [
-      0, 1, 2,
-      2, 3, 0,
-      4, 3, 0
-    ];
-    
-    geometry.setIndex( indices );
-    geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices.map(i =>  i), 3 ) );
-    geometry.setAttribute( 'color', colorAttribute );
-    ////
-    const sphere = new THREE.Mesh(geometry, material);
-
-    sphere.position.z = -100;
-    sphere.geometry.verticesNeedUpdate = true; // Allows Changes to the vertices
-    sphere.geometry.normalsNeedUpdate = true; // Allows Changes to the normals
-    sphere.rotation.x = -Math.PI / 3;
-
-
-    let verts = sphere.geometry.attributes.position.array;
-    const vertices_ = sphere.geometry.attributes.position.array
-    const float32Array = new Float32Array(vertices_.length * 3); // 3 values (x, y, z) per vertex
-
-    for (let i = 0; i < vertices_.length; i++) {
-        const index = i * 3;
-        float32Array[index] = vertices_[i].x;
-        float32Array[index + 1] = vertices_[i].y;
-        float32Array[index + 2] = vertices_[i].z;
-    }
-
-    console.log({ float32Array })
-    console.log({ verts: sphere.geometry.attributes })
-    const position = sphere.geometry.attributes.position.array;
-    const vector = new THREE.Vector3();
-
-    for (let i = 0, l = position.count; i < l; i++) {
-      vector.fromBufferAttribute(position, i);
-      vector.applyMatrix4(sphere.matrixWorld);
-      // console.log(vector);
-    }
-
-    // console.log({ verts})
-    // let values = attributes.displacement.value;
-
-    for (let i = 0; i < verts.length; i++) {
-      // attributes.displacement.value.push((Math.random() - 0.5) * 25);
-    }
-    // sphere.geometry.attributes.displacement.needsUpdate = true;
-    // console.log({attributes})    
-    return <mesh geometry={sphere.geometry} material={sphere.material} ref={meshRef} />
-
-  };
-
-  // useFrame((state, delta) => {
-  //   if (texture) {
-  //     setTimeout(() => {
-  //       for (let i = 0; i < [1,2,3,4,5,6].length; i++) {
-  //         meshRef.current.geometry.displacement.value.push((Math.random() - 0.5) * 25);
-  //       }
-  //       console.log(meshRef.current.geometry.attributes.position.array)
-  //     }, 3000)
-  //   }
-  // });
-  return mesh
-};
-
-// export default MyComponent
-
 const MyComponentNew = () => {
   const meshRef = React.useRef();
   const [texture, setTexture] = useState(null);
@@ -239,7 +34,7 @@ const MyComponentNew = () => {
 
   const setupNoiseTexture = () => {
     // Vertex shader
-        const vertexShader = `
+    const vertexShader = `
             varying vec2 vUv;
             uniform sampler2D displacementMap; // Displacement map texture
             uniform float displacementScale; // Scale factor for displacement
@@ -255,73 +50,82 @@ const MyComponentNew = () => {
             }
         `;
 
-        // Fragment shader
-        const fragmentShader = `
+    // Fragment shader
+    const fragmentShader = `
             varying vec2 vUv;
             void main() {
-                gl_FragColor = vec4(vUv, 0.5, 1.0);
+                float blueChannel = sin(vUv.y); // Use a variable for the blue channel
+                float redChannel = 1.0 - sin(vUv.x); // Use a variable for the red channel
+                gl_FragColor = vec4(redChannel, 0.30, blueChannel, 1.0);
             }
         `;
 
-        // Create a Three.js scene
-        const scene = new THREE.Scene();
+    // Create a Three.js scene
+    const scene = new THREE.Scene();
 
-        // Create a plane geometry
-        const geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
+    // Create a plane geometry
+    const geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
 
-        // Load the displacement map texture
-        // const displacementMapTexture = new THREE.TextureLoader().load('path/to/your/displacementmap.jpg');
+    // Load the displacement map texture
+    // const displacementMapTexture = new THREE.TextureLoader().load('path/to/your/displacementmap.jpg');
 
-        // Apply custom vertex and fragment shaders to a material
-        const material = new THREE.ShaderMaterial({
-            vertexShader: vertexShader,
-            fragmentShader: fragmentShader,
-            uniforms: {
-                displacementMap: { value: texture },
-                displacementScale: { value: -1.5 },
-            },
-            // wireframe:true,
-            side: THREE.DoubleSide
-        });
+    // Apply custom vertex and fragment shaders to a material
+    const material = new THREE.ShaderMaterial({
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      uniforms: {
+        displacementMap: { value: texture },
+        displacementScale: { value: -1.5 },
+      },
+      // wireframe:true,
+      side: THREE.DoubleSide
+    });
 
-        // Create a mesh with the geometry and shader material
-        const mesh = new THREE.Mesh(geometry, material);
+    // Create a mesh with the geometry and shader material
+    const mesh = new THREE.Mesh(geometry, material);
 
-        // Rotate the mesh to better visualize the terrain
-        mesh.rotation.x = -Math.PI / 2;
+    // Rotate the mesh to better visualize the terrain
+    mesh.rotation.x = -Math.PI / 2;
 
-        // Add the mesh to the scene
-        // scene.add(mesh);
+    // Add the mesh to the scene
+    // scene.add(mesh);
 
-        // Create a perspective camera
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+    // Create a perspective camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
 
-        // Create a WebGLRenderer and set its size
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    // Create a WebGLRenderer and set its size
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Add the renderer canvas to the DOM
-        document.body.appendChild(renderer.domElement);
+    // Add the renderer canvas to the DOM
+    document.body.appendChild(renderer.domElement);
 
-        // Animation function
-        const animate = function () {
-            requestAnimationFrame(animate);
+    // Animation function
+    const animate = function () {
+      requestAnimationFrame(animate);
 
-            // Rotate the mesh
-            mesh.rotation.z += 0.0005;
+      // Rotate the mesh
+      mesh.rotation.z += 0.005;
 
-            // Render the scene
-            renderer.render(scene, camera);
-        };
+      // Render the scene
+      renderer.render(scene, camera);
+    };
 
-        // Call the animate function
-        animate();
+    // Call the animate function
+    // animate();
 
-    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture}/>
+    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} />
 
   };
 
+  useFrame((state, delta) => {
+    if (texture && mesh) {
+      meshRef.current.rotation.y += 0.005;
+    }
+
+
+  });
   return mesh
 };
 
