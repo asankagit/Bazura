@@ -206,7 +206,126 @@ const MyComponent = () => {
   return mesh
 };
 
-export default MyComponent
+// export default MyComponent
+
+const MyComponentNew = () => {
+  const meshRef = React.useRef();
+  const [texture, setTexture] = useState(null);
+  const [mesh, setMesh] = useState(null);
+  const [vertices, setVertices] = useState(null);
+
+  // const heightMapImage = useLoader(THREE.TextureLoader, 'https://i.imgur.com/KcbQyP4.png');
+
+  const loadTexture = () => {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load('https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2pvYjgzNS0wNTIucG5n.png', (texture) => {
+      // http://localhost:3001/dist/heightmap.png
+      setTexture(texture);
+    });
+  };
+
+  useEffect(() => {
+    loadTexture();
+  }, []);
+
+  useEffect(() => {
+    if (texture) {
+      const mesh = setupNoiseTexture()
+      setMesh(mesh)
+    }
+
+  }, [texture]);
+
+
+  const setupNoiseTexture = () => {
+    // Vertex shader
+        const vertexShader = `
+            varying vec2 vUv;
+            uniform sampler2D displacementMap; // Displacement map texture
+            uniform float displacementScale; // Scale factor for displacement
+            void main() {
+                vUv = uv;
+                
+                // Sample displacement map to get height
+                float displacement = texture2D(displacementMap, vUv).r;
+
+                // Update vertex position based on displacement
+                vec4 modelViewPosition = modelViewMatrix * vec4(position + normal * displacement * displacementScale, 1.0);
+                gl_Position = projectionMatrix * modelViewPosition;
+            }
+        `;
+
+        // Fragment shader
+        const fragmentShader = `
+            varying vec2 vUv;
+            void main() {
+                gl_FragColor = vec4(vUv, 0.5, 1.0);
+            }
+        `;
+
+        // Create a Three.js scene
+        const scene = new THREE.Scene();
+
+        // Create a plane geometry
+        const geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
+
+        // Load the displacement map texture
+        // const displacementMapTexture = new THREE.TextureLoader().load('path/to/your/displacementmap.jpg');
+
+        // Apply custom vertex and fragment shaders to a material
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                displacementMap: { value: texture },
+                displacementScale: { value: -1.5 },
+            },
+            // wireframe:true,
+            side: THREE.DoubleSide
+        });
+
+        // Create a mesh with the geometry and shader material
+        const mesh = new THREE.Mesh(geometry, material);
+
+        // Rotate the mesh to better visualize the terrain
+        mesh.rotation.x = -Math.PI / 2;
+
+        // Add the mesh to the scene
+        // scene.add(mesh);
+
+        // Create a perspective camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Create a WebGLRenderer and set its size
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Add the renderer canvas to the DOM
+        document.body.appendChild(renderer.domElement);
+
+        // Animation function
+        const animate = function () {
+            requestAnimationFrame(animate);
+
+            // Rotate the mesh
+            mesh.rotation.z += 0.0005;
+
+            // Render the scene
+            renderer.render(scene, camera);
+        };
+
+        // Call the animate function
+        animate();
+
+    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture}/>
+
+  };
+
+  return mesh
+};
+
+export default MyComponentNew
 
 
 // reference for  displacement basesd vertix update
