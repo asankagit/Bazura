@@ -56,6 +56,10 @@ const MyComponentNew = () => {
             void main() {
                 float blueChannel = sin(vUv.y); // Use a variable for the blue channel
                 float redChannel = 1.0 - sin(vUv.x); // Use a variable for the red channel
+
+                // Compute grayscale value
+                //float grayscale = (redChannel + 0.30 + blueChannel) / 2.0;
+                //gl_FragColor = vec4(grayscale, grayscale, grayscale, 1.0);
                 gl_FragColor = vec4(redChannel, 0.30, blueChannel, 1.0);
             }
         `;
@@ -64,7 +68,7 @@ const MyComponentNew = () => {
     const scene = new THREE.Scene();
 
     // Create a plane geometry
-    const geometry = new THREE.PlaneGeometry(10, 10, 100, 100);
+    const geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
 
     // Load the displacement map texture
     // const displacementMapTexture = new THREE.TextureLoader().load('path/to/your/displacementmap.jpg');
@@ -75,7 +79,7 @@ const MyComponentNew = () => {
       fragmentShader: fragmentShader,
       uniforms: {
         displacementMap: { value: texture },
-        displacementScale: { value: -1.5 },
+        displacementScale: { value: -20.5 },
       },
       // wireframe:true,
       side: THREE.DoubleSide
@@ -106,7 +110,7 @@ const MyComponentNew = () => {
       requestAnimationFrame(animate);
 
       // Rotate the mesh
-      mesh.rotation.z += 0.005;
+      mesh.rotation.z += Math.PI / 2;
 
       // Render the scene
       renderer.render(scene, camera);
@@ -114,18 +118,20 @@ const MyComponentNew = () => {
 
     // Call the animate function
     // animate();
-
-    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} />
+    
+    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} position={[0,10,0] } />
 
   };
 
   useFrame((state, delta) => {
     if (texture && mesh) {
-      meshRef.current.rotation.y += 0.005;
+      // meshRef.current.rotation.y += 0.01;
+      meshRef.current.rotation.x = -Math.PI * 0.5
     }
 
 
   });
+  
   return mesh
 };
 

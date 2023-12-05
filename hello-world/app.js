@@ -130,16 +130,3 @@ exports.staticHandler = (event, context, callback) => {
 }
 
 app.listen(3001)
-// exports.lambdaHandler = function(event, context, callback){
-//     const html = renderToString(createElement(Hello));
-
-//     response = {
-//         'statusCode': 200,
-//         'body': JSON.stringify({
-//             message: html,
-//         })
-//     }
-
-
-//     callback(null,response)
-// };

@@ -93,7 +93,7 @@ module.exports = [
             __CONFIGS__: JSON.stringify({
                 service: 'React-ssr',
                 version: '0.2',
-                environment: process.env.BUILD_ENVIRONMENT || "local"
+                environment: process.env.BUILD_ENVIRONMENT || "http://localhost:3001"
             })
         }),
         new webpack.HotModuleReplacementPlugin(), // Enable HMR for client

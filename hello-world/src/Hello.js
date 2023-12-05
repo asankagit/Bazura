@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,  Suspense } from 'react';
 import st from './cards.scss';
 import locationIcon from '../../assets/svg/location-dot-solid.svg'
 import { Box } from "./TheeDemo"
@@ -10,7 +10,7 @@ import { useControls } from 'leva'
 import * as THREE from 'three';
 import Noise from 'noisejs';
 import {MySky, Sun, SkyWithShaders} from "./SkyGround";
-
+import { House, Model, LoadingFallback } from "./house"
 
 // Extend the THREE namespace with OrbitControls
 extend({ OrbitControls });
@@ -76,15 +76,11 @@ function Hello(props) {
           {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
           <CameraHelper />
           <OrbitControls />
-          {/* <Skypremitive
-            distance={450000}
-            sunPosition={[5, 1, 8]}
-            inclination={0}
-            azimuth={0.25}
-            scale={450000}
-            rayleigh={1}
-          // {...props}
-          /> */}
+          <Suspense fallback={<LoadingFallback />}>
+            <House url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' position={[0, 0, 0]}/>
+            {/* <House url='https://webgl-content.s3.ap-south-1.amazonaws.com/winter_house.glb' position={[0, 0, -800]}/> */}
+            {/* <Model url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' /> */}
+          </Suspense>
         </Canvas>
       </div>
     </div>
