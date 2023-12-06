@@ -205,11 +205,11 @@ const PlaneMesh = () => {
 };
 
 export const FogEffect = () => {
-  return <fog attach="fog" color="0x8c9091" near={10} far={5000} />
+  return <fog attach="fog" color="0x8c8fff" near={10} far={500} />
 }
 
 export const SkyWithShaders = () => {
-  const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+  const hemiLight = new THREE.HemisphereLight( 0x79bbff, 0x8bbbff,2 );
 	hemiLight.color.setHSL( 0.6, 1, 0.6 );
 
   const vertexShader = `varying vec3 vWorldPosition;
@@ -293,7 +293,7 @@ export const MySky = () => {
       {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
       <GroundSolo />
-      <FogEffect />
+      {/* <FogEffect /> */}
       <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} />
     </>
 

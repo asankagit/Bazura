@@ -9,7 +9,7 @@ import { useGLTF, Edges, MeshPortalMaterial, CameraControls, Environment, PivotC
 import { useControls } from 'leva'
 import * as THREE from 'three';
 import Noise from 'noisejs';
-import {MySky, Sun, SkyWithShaders} from "./SkyGround";
+import {MySky, Sun, SkyWithShaders, FogEffect} from "./SkyGround";
 import { House, Model, LoadingFallback } from "./house"
 
 // Extend the THREE namespace with OrbitControls
@@ -61,11 +61,11 @@ function Hello(props) {
   return (
     <div className={st.top}>
       <div className={st.bg}>
-        <h1 onClick={() => alert('woo ha3 hoo')}> WebGl world playground</h1>
+        <h1 onClick={() => alert('woo ha3 hoo')}> Pixel illusion</h1>
       </div>
       <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
         <Canvas height={"100%"}  style={{ width: '100%', height: '100%' }}
-        camera={{ position: [0, 100, 500], fov: 60, rotateY : Math.PI * 0.5,  far:2000, rotation:new THREE.Euler(Math.PI * 0.25, 0,0,'XYZ' )}}
+        camera={{ position: [0, 20, -20], fov: 60, rotateY : Math.PI * 0.5,  far:2000, rotation:new THREE.Euler(Math.PI * 0.25, 0,0,'XYZ' )}}
         >
           <ambientLight intensity={0.1}  color={"white"}/>
           <directionalLight position={[0, 0, 100]} />
@@ -74,11 +74,15 @@ function Hello(props) {
           <SkyWithShaders/>
           <MySky />
           {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
+          <FogEffect />
           <CameraHelper />
           <OrbitControls />
           <Suspense fallback={<LoadingFallback />}>
-            <House url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' position={[0, 0, 0]}/>
-            {/* <House url='https://webgl-content.s3.ap-south-1.amazonaws.com/winter_house.glb' position={[0, 0, -800]}/> */}
+            <House url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' position={[0, 0, 0]} scale={[1.0, 1.1, 1.1]}/>
+            <House 
+              url='https://webgl-content.s3.ap-south-1.amazonaws.com/dragon_fly.glb' 
+              position={[0, 5, 0]} scale={[0.01, 0.01, 0.01]} animationName='GltfAnimation 0' 
+            />
             {/* <Model url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' /> */}
           </Suspense>
         </Canvas>

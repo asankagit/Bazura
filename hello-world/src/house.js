@@ -9,7 +9,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 // import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 // import { GLBLLoader } from 'three/examples/jsm/loaders/'
 
-export const House = ({ url, position }) => {
+export const House = ({ url, position, scale, animationName }) => {
     const [houseObj, setHouseObj] = useState(null);
     const [animationMixer, setAnimationMixer] = useState(null);
     const gltfRef = useRef();
@@ -50,9 +50,10 @@ export const House = ({ url, position }) => {
             const mixer = new THREE.AnimationMixer(houseObj.scene);
             const clips = mesh.animations;
             setAnimationMixer(mixer);
-            const clip = THREE.AnimationClip.findByName( clips, 'Run' );
+            const clip = THREE.AnimationClip.findByName( clips, animationName || 'Walk' );
             const action = mixer.clipAction( clip );
 
+            console.log({ action}, { clips })
             action.play();
             mixer.update(clock.getDelta())
         }
@@ -62,11 +63,6 @@ export const House = ({ url, position }) => {
     const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-    // if (houseObj) {
-    //     const { actions, mixerRef } = useAnimations(houseObj.animations, group);
-    //         actions["Run"]
-    // }
-
     useFrame((state, delta) => {
         if(animationMixer) {
             animationMixer.update(clock.getDelta())
@@ -74,7 +70,7 @@ export const House = ({ url, position }) => {
 
     })
     
-    return houseObj ? <primitive object={houseObj.scene} scale={[1.0, 1.1, 1.1]}  position={position} ref={gltfRef} /> : <primitive object={sphere} scale={[0.1, 0.1, 0.1]} ref={gltfRef} />;
+    return houseObj ? <primitive object={houseObj.scene} scale={scale}  position={position} ref={gltfRef} /> : <primitive object={sphere} scale={[0.1, 0.1, 0.1]} ref={gltfRef} />;
 
 }
 
