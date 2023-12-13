@@ -47,16 +47,32 @@ const MyCameraControls = ({ target, offset }) => {
   const { camera } = useThree();
   const controlsRef = useRef();
 
-  // console.log({ target })
+  const prevTargetProps = usePrevious(useSelector(state => state.counter)) || {x:0,y:0,z:0}
+  const prevTarget = new THREE.Vector3(prevTargetProps.x, prevTargetProps.y, prevTargetProps.z) 
 
+  const clock = new THREE.Clock();
+  
   useFrame(() => {
     // Update the camera position based on the target and offset
     const targetPosition = target.clone().add(offset);
-    camera.position.lerp(targetPosition, 0.1);
+
+    const elapsedSeconds =clock.getDelta();
+    const animationDuration = 0.1;
+    const progress  = Math.min(1, elapsedSeconds / animationDuration)
+    camera.position.lerp(targetPosition, progress);
 
     // Look at the target
-    camera.lookAt(target);
+    //  previous  position 
+    camera.lookAt(prevTarget);
+    const q1 = new THREE.Quaternion().copy( camera.quaternion );
+    
+    camera.lookAt( target );
+    const q2 = new THREE.Quaternion().copy( camera.quaternion );
+    camera.quaternion.slerpQuaternions( q1, q2, 1 ); // 0 < time < 1
 
+    
+    
+    
     // Update OrbitControls
     // controlsRef.current.update();
   });
@@ -76,6 +92,17 @@ const CameraHelper = () => {
   </group>
 }
 
+
+// custom hook for getting previous value
+const usePrevious = (value) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value
+  }, [value]);
+
+  return ref.current;
+}
 
 function Hello(props) {
     const cameraControlRef = useRef(null);
