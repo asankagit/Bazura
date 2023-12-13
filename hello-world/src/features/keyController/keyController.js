@@ -20,7 +20,7 @@ export function Counter(props) {
       <div>
         <button
           aria-label="Increment value"
-          onClick={() => dispatch(updateYPosition(+0.1))}
+          onClick={() => dispatch(updateYPosition(+20))}
         >
           UP
         </button>

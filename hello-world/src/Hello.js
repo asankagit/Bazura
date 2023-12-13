@@ -57,7 +57,7 @@ const MyCameraControls = ({ target, offset }) => {
     const targetPosition = target.clone().add(offset);
 
     const elapsedSeconds =clock.getDelta();
-    const animationDuration = 0.1;
+    const animationDuration = 1;
     const progress  = Math.min(1, elapsedSeconds / animationDuration)
     camera.position.lerp(targetPosition, progress);
 
