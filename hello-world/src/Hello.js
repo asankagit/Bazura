@@ -9,7 +9,7 @@ import { useGLTF, Edges, MeshPortalMaterial, CameraControls, Environment, PivotC
 import { useControls } from 'leva'
 import * as THREE from 'three';
 import Noise from 'noisejs';
-import {MySky, Sun, SkyWithShaders, FogEffect} from "./SkyGround";
+import {MySky, Sun, SkyWithShaders, FogEffect, WaterComponent } from "./SkyGround";
 import { House, Model, LoadingFallback } from "./house"
 import { useSelector } from 'react-redux';
 // import { selectCount } from "./features/keyController/keyControllerSlice"
@@ -152,6 +152,7 @@ function Hello(props) {
               position={[0, position.y, 0]} scale={[0.01, 0.01, 0.01]} animationName='GltfAnimation 0' 
             />
             {/* <Model url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' /> */}
+            <WaterComponent />
           </Suspense>
         </Canvas>
       </div>

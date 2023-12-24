@@ -1,5 +1,5 @@
-import { Mesh, SphereGeometry, MeshBasicMaterial, PerspectiveCamera, AmbientLight } from '@react-three/drei';
-import { Canvas, useFrame, useLoader  } from '@react-three/fiber';
+import { Mesh, SphereGeometry, MeshBasicMaterial } from '@react-three/drei';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Sky } from '@react-three/drei';
@@ -7,7 +7,7 @@ import { Sky } from '@react-three/drei';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import GroundSolo from "./groundSolo";
 import Noise from 'noisejs';
-
+import {Reflector, useReflector,Water } from 'three-stdlib';
 
 const CustomSky = () => {
   const skyMaterial = useRef();
@@ -30,7 +30,7 @@ const CustomSky = () => {
     return (
       <Mesh ref={skyMaterial} geometry={geometry} material={material}>
         <SphereGeometry args={[10000, 32, 32]} />
-        <MeshBasicMaterial attach="material" color={0x8080FF} side={THREE.BackSide} />
+        <  MeshBasicMaterial attach="material" color={0x8080FF} side={THREE.BackSide} />
       </Mesh>
     );
   }, []);
@@ -64,61 +64,44 @@ const GroundNoImpact = () => {
   return <mesh geometry={geometry} material={material} />;
 };
 
-const TerrainLocalImg = ({ imagePath, width, height, scale }) => {
-  const [heightmap, setHeightmap] = useState(null);
-  const geometryRef = useRef(null);
+export const WaterComponent = () => {
+  const parameters = {
+    elevation: 2,
+    azimuth: 180
+  };
+  
+  const sun = new THREE.Vector3();
 
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        const textureLoader = new TextureLoader();
-        const loadedHeightmap = await textureLoader.load(imagePath);
-        setHeightmap(loadedHeightmap);
-      } catch (error) {
-        console.error('Error loading image:', error);
-      }
-    };
+  const phi = THREE.MathUtils.degToRad( 90 - parameters.elevation );
+	const theta = THREE.MathUtils.degToRad( parameters.azimuth );
+  sun.setFromSphericalCoords( 1, phi, theta );
 
-    loadImage();
-  }, [imagePath]);
+  const waterNormalsTexture = useLoader(THREE.TextureLoader, 'https://threejs.org/examples/textures/waternormals.jpg');
+  waterNormalsTexture.wrapS = waterNormalsTexture.wrapT = THREE.RepeatWrapping;
 
-  useEffect(() => {
-    if (!heightmap) return;
-
-    const createGeometry = () => {
-      console.log(window, "windows")
-      const canvas = window.document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(heightmap.image, 0, 0, width, height);
-
-      const imageData = context.getImageData(0, 0, width, height).data;
-
-      const geometry = new THREE.PlaneGeometry(width, height, width - 1, height - 1);
-
-      for (let i = 0; i < geometry.vertices.length; i++) {
-        const x = i % width;
-        const y = Math.floor(i / width);
-        const heightValue = imageData[(y * width + x) * 4] / 255;
-
-        geometry.vertices[i].z = heightValue * scale;
-      }
-
-      geometry.computeFaceNormals();
-      geometry.computeVertexNormals();
-
-      return geometry;
-    };
-
-    geometryRef.current = createGeometry();
-  }, [heightmap, width, height, scale]);
-
-  return (
-    <mesh geometry={geometryRef.current}>
-      <meshStandardMaterial color="green" />
-    </mesh>
+  // const { reflector, material, resolution } = useReflector();
+  const waterGeometry = new THREE.PlaneGeometry( 10000, 10000 );
+  const water = new Water(
+    waterGeometry,
+					{
+						textureWidth: 512,
+						textureHeight: 512,
+						waterNormals: waterNormalsTexture,
+						sunDirection: new THREE.Vector3(),
+						sunColor: 0xffffff,
+						waterColor:  0x80f0ff,
+						distortionScale: 3.7,
+            side: THREE.DoubleSide,
+						// fog: scene.fog !== undefined
+					}
   );
+  water.geometry.rotateX(-Math.PI * 0.5);
+
+  useFrame(() => {
+    water.material.uniforms[ 'sunDirection' ].value.copy( sun ).normalize();
+    water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
+  })
+  return <mesh geometry={water.geometry} material={water.material} position={[0, 0, 0]}/>
 };
 
 
@@ -288,13 +271,13 @@ export const MySky = () => {
       {/* <Ground /> */}
       {/* <PerspectiveCamera position={[0, 0, 100]} /> */}
       {/* <ambientLight color="#00000ff" intensity={0.5} /> */}
-      {/* <pointLight position={[0, 1, 100]} intensity={10} distance={10} color={"red"}/> */}
+      <pointLight position={[0, 0, 0]} intensity={10} distance={10} color={"red"}/>
       <light />
       {/* <PlaneMesh />  */}
       {/* <GroundNoImpact />*/}
       <GroundSolo />
       {/* <FogEffect /> */}
-      <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} />
+      {/* <Terrain url="http://localhost:3001/client/heightmap.png" width={11} height={11} scale={5} position={[100, 100, 100 ]} /> */}
     </>
 
   );
