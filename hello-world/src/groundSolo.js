@@ -13,7 +13,10 @@ const MyComponentNew = () => {
 
   const loadTexture = () => {
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2pvYjgzNS0wNTIucG5n.png', (texture) => {
+    textureLoader.load(
+      // 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2pvYjgzNS0wNTIucG5n.png'
+      'http://localhost:3001/client/rock-height-map.jpg'
+      , (texture) => {
       // http://localhost:3001/dist/heightmap.png
       setTexture(texture);
     });
@@ -53,14 +56,46 @@ const MyComponentNew = () => {
     // Fragment shader
     const fragmentShader = `
             varying vec2 vUv;
-            void main() {
-                float blueChannel = sin(vUv.y); // Use a variable for the blue channel
-                float redChannel = 1.0 - sin(vUv.x); // Use a variable for the red channel
+            uniform sampler2D displacementMap;
+            uniform vec2 resolution;  // Add this line to declare resolution
 
-                // Compute grayscale value
-                //float grayscale = (redChannel + 0.30 + blueChannel) / 2.0;
-                //gl_FragColor = vec4(grayscale, grayscale, grayscale, 1.0);
-                gl_FragColor = vec4(redChannel, 0.30, blueChannel, 1.0);
+            void main() {
+              float heightThreshold = 10.5;
+                // float blueChannel = sin(vUv.y); // Use a variable for the blue channel
+                // float redChannel = 1.0 - sin(vUv.x); // Use a variable for the red channel
+
+                // // Compute grayscale value
+                // float grayscale = (redChannel + 0.30 + blueChannel) / 2.0;
+                // gl_FragColor = vec4(grayscale, grayscale, grayscale, 1.0);
+                // //gl_FragColor = vec4(redChannel, 0.30, blueChannel, 1.0);
+
+                 // Calculate slope using central differences
+              float dx = texture2D(displacementMap, vUv + vec2(1.0 / resolution.x, 0.0)).r - texture2D(displacementMap, vUv - vec2(1.0 / resolution.x, 0.0)).r;
+              float dy = texture2D(displacementMap, vUv + vec2(0.0, 1.0 / resolution.y)).r - texture2D(displacementMap, vUv - vec2(0.0, 1.0 / resolution.y)).r;
+              float slope = sqrt(dx * dx + dy * dy);
+
+              // Sample the displacement map
+              float displacement = texture2D(displacementMap, vUv).r;
+              
+              // Define color for slopes (adjust these values)
+              vec3 slopeColor = vec3(.3,0.1,.1);
+
+              // Define color for flat areas (adjust these values)
+              vec3 flatColor = vec3(1.);
+
+              // Interpolate between slope color and flat color based on slope
+              vec3 finalColor = mix(flatColor, slopeColor, smoothstep(0.0, 0.1, slope));
+
+              // Check if the displacement is above the height threshold
+              if (displacement > heightThreshold) {
+                  // Interpolate between slope color and flat color based on slope
+                  vec3 finalColor = mix(flatColor, slopeColor, smoothstep(0.0, 0.1, slope));
+
+                  gl_FragColor = vec4(finalColor, 1.0);
+              } else {
+                  // If below the height threshold, use the original color
+                  gl_FragColor = vec4(texture2D(displacementMap, vUv).rgb, 1.0);
+              }
             }
         `;
 
@@ -79,7 +114,7 @@ const MyComponentNew = () => {
       fragmentShader: fragmentShader,
       uniforms: {
         displacementMap: { value: texture },
-        displacementScale: { value: -20.5 },
+        displacementScale: { value: 10.5 },
       },
       // wireframe:true,
       side: THREE.DoubleSide
@@ -119,7 +154,7 @@ const MyComponentNew = () => {
     // Call the animate function
     // animate();
     
-    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} position={[0,10,0] } />
+    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} position={[0,-5,0] } />
 
   };
 
