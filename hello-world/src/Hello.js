@@ -106,7 +106,7 @@ const usePrevious = (value) => {
 
 function Hello(props) {
     const cameraControlRef = useRef(null);
-    let position = {x:0,y:0,z:0};
+    let position = {x:0,y:5,z:0};
     if (props.store) {
       position = useSelector(state => state.counter);
     }
@@ -138,7 +138,7 @@ function Hello(props) {
           <MySky />
           {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
           <FogEffect />
-          <CameraHelper />
+          {/* <CameraHelper /> */}
           <OrbitControls />
           <Suspense fallback={<LoadingFallback />}>
             {/* <House 
@@ -146,8 +146,14 @@ function Hello(props) {
               position={[0, position.y, 0]} scale={[1.0, 1.1, 1.1]}
               animationName="Action.001"
             /> */}
-            <House
+            <House 
               ref={characterRef}
+              url='https://webgl-content.s3.ap-south-1.amazonaws.com/guard.glb'
+              animationName='Run'
+              position={[0, 0, 0]}
+            />
+            <House
+              // ref={characterRef}
               url='https://webgl-content.s3.ap-south-1.amazonaws.com/dragon_fly.glb' 
               position={[0, position.y, 0]} scale={[0.01, 0.01, 0.01]} animationName='GltfAnimation 0' 
             />

@@ -15,7 +15,7 @@ const MyComponentNew = () => {
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(
       // 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2pvYjgzNS0wNTIucG5n.png'
-      'http://localhost:3001/client/rock-height-map.jpg'
+      'https://webgl-content.s3.ap-south-1.amazonaws.com/rock-height-map.jpg'
       , (texture) => {
       // http://localhost:3001/dist/heightmap.png
       setTexture(texture);
@@ -154,7 +154,7 @@ const MyComponentNew = () => {
     // Call the animate function
     // animate();
     
-    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} position={[0,-5,0] } />
+    return <mesh geometry={geometry} material={material} ref={meshRef} texture={texture} position={[5,-5, 0] } />
 
   };
 
@@ -335,3 +335,5 @@ function render(delta) {
 }
 
 render();`
+
+// https://typhomnt.github.io/teaching/ray_tracing/raymarching_intro/
