@@ -14,7 +14,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   name: "Logger",
-  entry: { wasmer_host_function: "./babel-runtime.js" },
+  entry: { vm: "./babel-runtime.js" },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].generated.js",
