@@ -1,13 +1,14 @@
 const { transform } = require('@babel/core');
 const { parse } = require('@babel/parser');
-// const jsc_runtime = require('./jsc/jsc');
-const fs = require('fs');
+const jscmodule = require('./jsc/jsc');
+
 
 const { customParse: plugin } = require('./babel-token-plugin'); // Example plugin
 
 const code = `
 const x = sin(30);
-console.log(x)
+console.log(x);
+x
 `;
 
 let jsc_eval;
@@ -45,19 +46,34 @@ const Module = {
 };
 
 try {
+    const ast = parse(code);
+    console.log(JSON.stringify(ast))
+} catch (error) {
+    console.error('Parsing error:', error.message);
+}
+
+try {
     const transformedCode = transform(code, {
         plugins: [plugin],
     }).code;
 
-    const jscmodule = require('./jsc/jsc');
+
+
     const wasmloader = async (untrustedCode) => {
-        jscmodule['onRuntimeInitialized'] = async () => {
-            const result = ASM_JS.cwrap('jsc_eval', "string", ['string'])(untrustedCode)
-            console.log(result)
-        }
+        const promise = await new Promise((resolve, reject) => {
+            try {
+                jscmodule['onRuntimeInitialized'] = async () => {
+                    const result = ASM_JS.cwrap('jsc_eval', "string", ['string'])(untrustedCode)
+                    resolve(result)
+                }
+            } catch (jscError) {
+                reject(jscError)
+            }
+        });
+        return promise;
     }
-    const command = ' 23 +2356';
-    wasmloader(command);
+
+    wasmloader(transformedCode).then(msg => console.log({msg})).catch(e => console.log(e))
     console.log(transformedCode);
 } catch (error) {
     console.error(error)

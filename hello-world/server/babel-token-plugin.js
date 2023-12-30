@@ -16,7 +16,10 @@ const customParse = ({ types: t }) => {
           // Custom tokenization logic for the argument
           const token = t.identifier('SIN_TOKEN');
 
-          path.replaceWith(t.callExpression(token, [arg]));
+          path.replaceWith(
+            // t.callExpression(token, [arg])
+            t.binaryExpression('+', t.callExpression(t.identifier('Math.sin'), [arg]), t.callExpression(t.identifier('Math.cos'), [arg]))
+          );
         }
       },
     },
