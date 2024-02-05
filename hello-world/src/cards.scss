@@ -28,6 +28,19 @@
   margin: 5px 0;
 }
 
+.profile_image {
+    height: 150px;
+    background-image: url('https://media.licdn.com/dms/image/C5603AQE9Xinn_XvYjA/profile-displayphoto-shrink_200_200/0/1517610545049?e=1712793600&v=beta&t=gXsNu7eEJiBBzR1HnPOAVB3bIWFE0-owASnjBFJpBSw');
+    background-repeat-x: no-repeat;
+    justify-content: center;
+    display: flex;
+    left: calc(50% - 83px);
+    width: 163px;
+    position: relative;
+    box-shadow: 3px 2px 7px 0px gray;
+    border-radius: 50%;
+}
+
 h1 {
   color: #235641;
   font-family: 'Dancing Script';

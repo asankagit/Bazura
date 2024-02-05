@@ -123,19 +123,18 @@ function Hello(props) {
 
   return (
     <div className={st.top}>
+    
       <div className={st.bg}>
         <h1 > Hi, I'm Asanka Basnayake </h1>
-        <h3 className="positions_as">-Web application developer-</h3>
-
-        
-
+        <h3 className="positions_as">-Web application developer located in Sri Lanka-</h3>
         <Typography>
+          <div><div className="profile_image">.</div></div>
           <Title>Overview.</Title>
         </Typography>
         <div className={"githublogo"}>
         I'm a passionate craftsman who transforms complex ideas into engaging and dynamic web experiences. With a deep understanding
-            of TypeScript, JavaScript, React, Node.js, and even
-            Three.js, I have a knack for building performant and scalable solutions that truly make a difference.!
+            of TypeScript, JavaScript, React, Node.js, and 
+            Three.js, I have a knack for building performant and scalable solutions that truly make a difference!
         </div>
       </div>
       <div className="projects_section">Hobby/Open-Source Works</div>
