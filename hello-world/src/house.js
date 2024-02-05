@@ -3,6 +3,14 @@ import * as THREE from 'three';
 import React, { useState, useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 
+
+// import vm from '@asanka-npm/jsc-vm'
+
+// console.log('vm',vm.default({
+//     params: { code: `251;`},
+//     callback: (x) => {console.log(x)}
+// }))
+
 // three/examples/jsm/loaders/GLTFLoader.js
 // import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';

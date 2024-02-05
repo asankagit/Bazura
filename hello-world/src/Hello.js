@@ -12,8 +12,9 @@ import Noise from 'noisejs';
 import {MySky, Sun, SkyWithShaders, FogEffect, WaterComponent } from "./SkyGround";
 import { House, Model, LoadingFallback } from "./house"
 import { useSelector } from 'react-redux';
-// import { selectCount } from "./features/keyController/keyControllerSlice"
+import { Card, Typography} from 'antd';
 
+const { Title, Paragraph, Text, Link } = Typography;
 // Extend the THREE namespace with OrbitControls
 extend({ OrbitControls });
 
@@ -123,45 +124,69 @@ function Hello(props) {
   return (
     <div className={st.top}>
       <div className={st.bg}>
-        <h1 onClick={() => alert('woo ha3 hoo')}> PixelCraft </h1>
+        <h1 > Hi, I'm Asanka Basnayake </h1>
+        <h3 className="positions_as">-Web application developer-</h3>
+
+        
+
+        <Typography>
+          <Title>Overview.</Title>
+        </Typography>
+        <div className={"githublogo"}>
+        I'm a passionate craftsman who transforms complex ideas into engaging and dynamic web experiences. With a deep understanding
+            of TypeScript, JavaScript, React, Node.js, and even
+            Three.js, I have a knack for building performant and scalable solutions that truly make a difference.!
+        </div>
       </div>
-      <div className={st.bottom} style={{ width: "100vw", height: "100vh" }}>
-        <Canvas height={"100%"}  style={{ width: '100%', height: '100%' }}
-        camera={{ position: [0, 20, -20], fov: 60, rotateY : Math.PI * 0.5,  far:2000, rotation:new THREE.Euler(Math.PI * 0.25, 0,0,'XYZ' )}}
-        >
-          <MyCameraControls target={characterRef.current ? characterRef.current.position : new THREE.Vector3(0, position.y, 0)} offset={new THREE.Vector3(3, 15, -5)} />
-          <ambientLight intensity={0.1}  color={"white"}/>
-          <directionalLight position={[0, 0, 100]} />
-          <directionalLight position={[-20, 100, -100]}  color={'gary'}/>
-          <Sun />
-          <SkyWithShaders/>
-          <MySky />
-          {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
-          <FogEffect />
-          {/* <CameraHelper /> */}
-          <OrbitControls />
-          <Suspense fallback={<LoadingFallback />}>
-            {/* <House 
-              url='https://webgl-content.s3.ap-south-1.amazonaws.com/dady_papa_smurf___rigged_blender.glb'
-              position={[0, position.y, 0]} scale={[1.0, 1.1, 1.1]}
-              animationName="Action.001"
-            /> */}
-            <House 
-              ref={characterRef}
-              url='https://webgl-content.s3.ap-south-1.amazonaws.com/guard.glb'
-              animationName='Run'
-              position={[0, 0, 0]}
-            />
-            <House
-              // ref={characterRef}
-              url='https://webgl-content.s3.ap-south-1.amazonaws.com/dragon_fly.glb' 
-              position={[0, position.y, 0]} scale={[0.01, 0.01, 0.01]} animationName='GltfAnimation 0' 
-            />
-            {/* <Model url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' /> */}
-            <WaterComponent />
-          </Suspense>
-        </Canvas>
-      </div>
+      <div className="projects_section">Hobby/Open-Source Works</div>
+      <Card 
+        title={
+          <a href="https://github.com/asankagit" className={st.githublogo}>
+          <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" width="30px"/>
+          React-Three-Fiber run on AWS lambda
+          </a>
+        } 
+        extra={<a href="#">More</a>} style={{ width: "100%" }}
+      >
+        <div className={st.bottom} style={{ width: "100%", height: "100vh" }}>
+          <Canvas height={"100%"} style={{ width: '100%', height: '100%' }}
+            camera={{ position: [0, 20, -20], fov: 60, rotateY: Math.PI * 0.5, far: 2000, rotation: new THREE.Euler(Math.PI * 0.25, 0, 0, 'XYZ') }}
+          >
+            <MyCameraControls target={characterRef.current ? characterRef.current.position : new THREE.Vector3(0, position.y, 0)} offset={new THREE.Vector3(3, 15, -5)} />
+            <ambientLight intensity={0.1} color={"white"} />
+            <directionalLight position={[0, 0, 100]} />
+            <directionalLight position={[-20, 100, -100]} color={'gary'} />
+            <Sun />
+            <SkyWithShaders />
+            <MySky />
+            {/* <PerspectiveCamera position={[0, 0, 0]} fov={75}/> */}
+            <FogEffect />
+            {/* <CameraHelper /> */}
+            <OrbitControls />
+            <Suspense fallback={<LoadingFallback />}>
+              {/* <House 
+                url='https://webgl-content.s3.ap-south-1.amazonaws.com/dady_papa_smurf___rigged_blender.glb'
+                position={[0, position.y, 0]} scale={[1.0, 1.1, 1.1]}
+                animationName="Action.001"
+              /> */}
+              <House
+                ref={characterRef}
+                url='https://webgl-content.s3.ap-south-1.amazonaws.com/guard.glb'
+                animationName='Run'
+                position={[0, 0, 0]}
+              />
+              <House
+                // ref={characterRef}
+                url='https://webgl-content.s3.ap-south-1.amazonaws.com/dragon_fly.glb'
+                position={[0, position.y, 0]} scale={[0.01, 0.01, 0.01]} animationName='GltfAnimation 0'
+              />
+              {/* <Model url='https://webgl-content.s3.ap-south-1.amazonaws.com/Soldier.glb' /> */}
+              <WaterComponent />
+            </Suspense>
+          </Canvas>
+        </div>
+      </Card>
+      
       
     </div>
   )

@@ -8,6 +8,7 @@ import {
   selectCount,
   updateYPosition
 } from './keyControllerSlice';
+import { Button, Flex, Tooltip } from 'antd';
 
 export function Counter(props) {
   const count = useSelector(selectCount);
@@ -18,19 +19,21 @@ export function Counter(props) {
     <div>
       {props.children}
       <div>
-        <button
+        
+        <Button
+          type="primary" shape="circle" 
           aria-label="Increment value"
           onClick={() => dispatch(updateYPosition(+20))}
         >
           UP
-        </button>
+        </Button>
         <span>{count}</span>
-        <button
+        {/* <button
           aria-label="Decrement value"
           onClick={() => dispatch(updateYPosition(-2))}
         >
           Down
-        </button>
+        </button> */}
       </div>
       {/* <div>
         <input

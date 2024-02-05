@@ -74,12 +74,12 @@ module.exports = [
             },
             {
               loader: "css-loader",
-              // options: { modules: true} 
-              options: {
-                esModule: false,
-              }
+              options: { modules: {localIdentName: '[local]'}, esModule: false,} 
+              // options: {
+              //   esModule: false,
+              // }
             },
-            // { loader: "sass-loader" }
+            { loader: "sass-loader" }
           ]
         }
         ]
