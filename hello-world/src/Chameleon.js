@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Image, Divider, Typography} from 'antd';
 import st from './cards.scss';
-import { DockerOutlined, GithubOutlined, JavaScriptOutlined, LinuxOutlined } from '@ant-design/icons';
 
 const Chameleon = ({ width, src, height, }) => {
   return (<dv>
@@ -27,14 +26,6 @@ const Chameleon = ({ width, src, height, }) => {
       <div>
         <Image src="https://raw.githubusercontent.com/asankagit/quadtree/main/demo.png" />
       </div>
-    </Card>
-
-    <Divider />
-    <Card title='Tech stack I love'>
-      <DockerOutlined  style={{ fontSize: '25px', color: '#08c' ,padding: '20px'}} height={50}/>
-      <GithubOutlined  style={{ fontSize: '25px', color: '#08c',padding: '20px' }}/>
-      <JavaScriptOutlined  style={{ fontSize: '25px', color: '#08c',padding: '20px' }}/>
-      <LinuxOutlined  style={{ fontSize: '25px', color: '#08c',padding: '20px' }}/>
     </Card>
   </dv>)
 

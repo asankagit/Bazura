@@ -41,7 +41,7 @@
 }
 
 h1 {
-  color: #235641;
+  color: #1532a4;
   font-family: 'Roboto';
 }
 
@@ -71,7 +71,8 @@ body {
   background-repeat: no-repeat;
   font-size: 2rem;
   text-align: center;
-  background-color: whitesmoke;
+  background-color: #e6f2f8;
+  color: #0a428c;
 }
 
 @font-face {
