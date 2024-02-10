@@ -25,7 +25,7 @@ export function Counter(props) {
           aria-label="Increment value"
           onClick={() => dispatch(updateYPosition(+20))}
         >
-          UP
+          Fly
         </Button>
         <span>{count}</span>
         {/* <button

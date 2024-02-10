@@ -40,7 +40,7 @@ const template = (content) => `<!DOCTYPE html>
   <title>Pixellio </title>
   <link href="/dist/styles.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
-  <script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!--<script data-ad-client="ca-pub-2317903401020318" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
   <meta property="og:image"  content="https://static.observableusercontent.com/thumbnail/16029014ad2d5b18c0b97a351939893d2f30a48b25a6caa7741fe22d5d30e5a1.jpg">
 </head>
 
@@ -50,17 +50,26 @@ const template = (content) => `<!DOCTYPE html>
      <div id="three">  </div>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- pixellio_adsense -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2317903401020318"
-     data-ad-slot="4706545270"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
   <script href="bundle.js" src="client/bundle.js" defer></script>
+  <script defer>
+  function removeSecondCanvas() {
+    /// Select all canvas elements
+    const canvases = document.getElementsByTagName('canvas');
+
+    // Check if there is more than one canvas
+    if (canvases.length > 1) {
+        // Remove the second canvas (index 1)
+        canvases[1].parentNode.removeChild(canvases[1]);
+    } else {
+        console.log("There is only one canvas element.");
+    }
+}
+
+// Call the function after all elements have rendered
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => removeSecondCanvas(), 4000);
+});
+  </script>
 </body>
 </html>`;
 

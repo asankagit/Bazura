@@ -4,13 +4,15 @@ import ReactDOM from "react-dom";
 import store from './app/store'
 import { Provider } from 'react-redux'
 import {Counter} from "./features/keyController/keyController"
+import { Chameleon as ChameleonIntro } from "./Chameleon";
 
 ReactDOM.hydrate(
     <Provider store={store}>
         <div>
             <Counter>
                 <App store={store}/>
-            </Counter>            
+            </Counter>   
+             <ChameleonIntro />
         </div>
     </Provider>,
     document.getElementById('root')

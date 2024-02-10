@@ -12,7 +12,8 @@ import Noise from 'noisejs';
 import {MySky, Sun, SkyWithShaders, FogEffect, WaterComponent } from "./SkyGround";
 import { House, Model, LoadingFallback } from "./house"
 import { useSelector } from 'react-redux';
-import { Card, Typography} from 'antd';
+import { Card, Typography, Divider} from 'antd';
+
 
 const { Title, Paragraph, Text, Link } = Typography;
 // Extend the THREE namespace with OrbitControls
@@ -126,10 +127,11 @@ function Hello(props) {
     
       <div className={st.bg}>
         <h1 > Hi, I'm Asanka Basnayake </h1>
-        <h3 className="positions_as">-Web application developer located in Sri Lanka-</h3>
+        <h3 className="positions_as">-Web application developer, from in Sri Lanka-</h3>
         <Typography>
           <div><div className="profile_image">.</div></div>
           <Title>Overview.</Title>
+          <Divider />
         </Typography>
         <div className={"githublogo"}>
         I'm a passionate craftsman who transforms complex ideas into engaging and dynamic web experiences. With a deep understanding
@@ -140,14 +142,14 @@ function Hello(props) {
       <div className="projects_section">Hobby/Open-Source Works</div>
       <Card 
         title={
-          <a href="https://github.com/asankagit" className={st.githublogo}>
-          <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" width="30px"/>
+          <a href="https://github.com/asankagit" className={st.githublogo} target="_blank">
+          <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" width="30px" className="githubico"/>
           React-Three-Fiber run on AWS lambda
           </a>
         } 
-        extra={<a href="#">More</a>} style={{ width: "100%" }}
+        style={{ width: "100%" }}
       >
-        <div className={st.bottom} style={{ width: "100%", height: "100vh" }}>
+        <div className={st.bottom} style={{ width: "100%", height: "50vh" }}>
           <Canvas height={"100%"} style={{ width: '100%', height: '100%' }}
             camera={{ position: [0, 20, -20], fov: 60, rotateY: Math.PI * 0.5, far: 2000, rotation: new THREE.Euler(Math.PI * 0.25, 0, 0, 'XYZ') }}
           >

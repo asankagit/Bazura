@@ -7,7 +7,7 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
-    "@asanka-npm/jsc-vm": "^1.0.3",
+    "@ant-design/icons": "^5.3.0",
     "@babel/runtime": "^7.23.2",
     "@babel/runtime-corejs3": "^7.23.2",
     "@mobiscroll/react-lite": "^4.10.2",
