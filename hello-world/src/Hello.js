@@ -127,10 +127,9 @@ function Hello(props) {
     
       <div className={st.bg}>
         <h1 > Hi, I'm Asanka Basnayake </h1>
-        <h3 className="positions_as">-Web application developer, from in Sri Lanka-</h3>
+        <h3 className="positions_as">-Web application developer from Sri Lanka-</h3>
         <Typography>
           <div><div className="profile_image">.</div></div>
-          <Title>Overview.</Title>
           <Divider />
         </Typography>
         <div className={"githublogo"}>
