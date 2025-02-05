@@ -126,16 +126,18 @@ function Hello(props) {
     <div className={st.top}>
     
       <div className={st.bg}>
-        <h1 > Hi, I'm Asanka Basnayake </h1>
-        <h3 className="positions_as">-Web application developer from Sri Lanka-</h3>
+        <h1 > Pixellio Labs</h1>
+        {/* <h3 className="positions_as">-Web application developer from Sri Lanka-</h3> */}
         <Typography>
           <div><div className="profile_image">.</div></div>
           <Divider />
         </Typography>
         <div className={"githublogo"}>
-        I'm a passionate craftsman who transforms complex ideas into engaging and dynamic web experiences. With a deep understanding
-            of TypeScript, JavaScript, React, Node.js, and 
-            Three.js, I have a knack for building performant and scalable solutions that truly make a difference!
+        At Pixellio, we are a team of passionate craftsmen dedicated to transforming complex ideas into 
+        engaging and dynamic web experiences. With expertise in TypeScript, JavaScript, React, Node.js, and Three.js, 
+        we specialize in building high-performance and scalable solutions that make a real impact.
+        Whether it's immersive 3D applications, interactive web platforms, or cutting-edge digital experiences, 
+        we bring creativity and technical excellence to every project. 🚀
         </div>
       </div>
       <div className="projects_section">Hobby/Open-Source Works</div>

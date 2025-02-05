@@ -27,7 +27,7 @@ const JscVMIntro = () => {
     </Card>
 
     <Divider />
-    <Card title='Tech stack I love'>
+    <Card title='Tech stack we love'>
       <DockerOutlined  style={{ fontSize: '25px', color: '#08c' ,padding: '20px'}} height={50}/>
       <GithubOutlined  style={{ fontSize: '25px', color: '#08c',padding: '20px' }}/>
       <JavaScriptOutlined  style={{ fontSize: '25px', color: '#08c',padding: '20px' }}/>

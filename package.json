@@ -44,7 +44,8 @@
   "scripts": {
     "test": "mocha tests/unit/",
     "build-prod": "webpack --config webpack.config.js --hot --watch --mode=production",
-    "build": "webpack --config webpack.config.js --hot --watch"
+    "build": "webpack --config webpack.config.js --hot --watch",
+    "deploy": "sam deploy"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

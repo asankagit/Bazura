@@ -73,6 +73,8 @@ body {
   text-align: center;
   background-color: #e6f2f8;
   color: #0a428c;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 @font-face {
